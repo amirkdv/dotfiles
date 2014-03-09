@@ -29,6 +29,6 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 fi
 [[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
 [[ -f /etc/bash_completion ]] && ! shopt -oq posix && source /etc/bash_completion
-[[ -f ~/.ssh_agent ]] && source ~/.ssh_agent && start_agent && add_identity
+[[ -f ~/.bash_ssh_agent ]] && source ~/.bash_ssh_agent && start_agent && add_identity
 [[ -f ~/.bash_prompt ]] && source ~/.bash_prompt && setup_prompt
 [[ -f ~/.bash_locale ]] && source ~/.bash_locale && setup_locale en_CA.utf8

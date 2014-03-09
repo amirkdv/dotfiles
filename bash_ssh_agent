@@ -1,0 +1,18 @@
+#!/bin/bash
+# start agent and set environment variables, if needed
+start_agent(){
+  if ! env | grep -q SSH_AGENT_PID >/dev/null; then
+    echo "Starting ssh agent"
+    eval $( ssh-agent -s )
+  fi
+}
+add_identity(){
+  if ! ssh-add -l >/dev/null 2>&-; then
+    ssh-add
+  fi
+}
+remove_identity(){
+  ssh-add -D
+  unset SSH_AGENT_PID
+  unset SSH_AUTH_SOCK
+}
