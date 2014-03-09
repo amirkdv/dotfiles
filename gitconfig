@@ -9,3 +9,10 @@
   added   = green
   changed = yellow
   untracked = cyan
+[alias]
+  st = status
+  co = checkout
+  aa = add --all
+  ap = add --patch
+  ca = commit --amend
+  ci = commit -v
