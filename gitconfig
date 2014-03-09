@@ -1,0 +1,13 @@
+[color]
+  ui = true
+[user]
+  name = Amir Kadivar
+  email= amir.h.kadivar@gmail.com
+[push]
+  default = upstream
+[core]
+  excludesfile = ~/.gitignore
+[color "status"]
+  added   = green
+  changed = yellow
+  untracked = cyan
