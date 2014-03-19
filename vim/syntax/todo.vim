@@ -15,7 +15,7 @@ syn region  rstStrongEmphasis start=/\*\*[^*]/  end=/\*\*/  contained
 syn region  rstInlineLiteral  start=/``/        end=/``/    contains=rstURL contained
 syn match   rstBulletedList   /^\s*\([+-]\|\*\)\s/          contained
 syn match   rstEnumeratedList /^\s*[a-zA-Z0-9]\.\s/         contained
-syn match   rstURL /\(file\|ftp\|http\|https\|mailto\):[-./[:alnum:]_~@:#%?=+]\+/ contained
+syn match   rstURL /\(file\|ftp\|http\|https\|mailto\):[-./[:alnum:]_~@:#%?!=+]\+/ contained
 syn cluster rstBasics contains=rstEmphasis,rstStrongEmphasis,rstInlineLiteral,rstURL,rstBulletedList,rstEnumeratedList,rstLiteralBlock
 highlight   rstURL            ctermfg=081
 highlight   rstEmphasis       ctermfg=223 ctermbg=none cterm=none
