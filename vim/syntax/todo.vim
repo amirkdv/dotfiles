@@ -35,10 +35,11 @@ syntax region   todoItemInProgress  start=/^\s*\[_\]/ skip=/^$/ end=/^\s*\[/re=s
 syntax region   todoItemNew         start=/^\s*\[\.\]/ skip=/^$/ end=/^\s*\[/re=s-1,he=s-1,me=s-1 contains=@rstBasics
 syntax match    magicLine           /^#\s*vi:.*:\s*$/
 
-hi todoItemDone        ctermfg=065
-hi todoItemQuestion    ctermfg=212
-hi todoItemInProgress  ctermfg=112
-hi magicLine           ctermfg=245
+hi todoItemDone       ctermfg=065
+hi todoItemQuestion   ctermfg=212
+hi todoItemInProgress ctermfg=112
+hi todoItemNew        ctermfg=183
+hi magicLine          ctermfg=245
 
 " toggle state of items, in visual mode apply to selection, in normal mode apply
 " to current item.
