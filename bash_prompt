@@ -15,7 +15,7 @@ setup_prompt(){
   local -r fqdn="\$(hostname --fqdn)"
   local -r user="\$(logname)"
   local -r git_branch=" \$(which git >/dev/null && git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/(\1)/')"
-  local -r pwd_color="\$( if [[ $fqdn =~ amir-tp|imac-amir ]]; then echo \"${blue}\"; elif [[ $fqdn =~ sandbox ]]; then echo \"${yellow}\"; else echo \"${purple}\"; fi)"
+  local -r pwd_color="\$( if [[ $fqdn =~ jupiter|neptune|imac-amir ]]; then echo \"${purple}\";else echo \"${yellow}\"; fi)"
   #NOTE if user is root make cursor red
   local -r user_color="\$( [[ $user == 'root' ]] && echo \"${red}\" )"
 
