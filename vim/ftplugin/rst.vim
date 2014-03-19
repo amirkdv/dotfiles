@@ -32,5 +32,5 @@ let b:current_syntax = 'rst'
 " all item markers: [x], [ ], and [?] are defined as list leaders, which in
 " conjuction with fo=nt ensures proper indentation
 " note: all special characters have to be escaped, e.g. '\|' becomes '\\\|'
-set formatlistpat=^\\s*\\(\\\*\\\ \\\|\\d\\+\\.\\\ \\\|\\[\\(x\\\|?\\\|_\\\|\\.\\\|\\s\\)\\]\\\|\\.\\.\\)\\s*
+set formatlistpat=^\\s*\\(-\\\ \\\|\\\*\\\ \\\|\\d\\+\\.\\\ \\\|\\[\\(x\\\|?\\\|_\\\|\\.\\\|\\s\\)\\]\\\|\\.\\.\\)\\s*
 set fo=nt
