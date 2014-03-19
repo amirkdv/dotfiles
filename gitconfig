@@ -10,6 +10,8 @@
   changed = yellow
   untracked = cyan
 [alias]
+  l  = log
+  lp = log --patch
   st = status
   co = checkout
   aa = add --all
