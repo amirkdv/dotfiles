@@ -29,10 +29,10 @@ hi link     rstTitle          MatchParen
 " [_] in progress/pending
 " [x] done/wont-fix
 " [?] idea/question
-syntax region   todoItemDone        start=/^\s*\[x\]/  skip=/^$/ end=/^\s*\[/re=s-1,he=s-1,me=s-1 " contains=@rstBasics
-syntax region   todoItemQuestion    start=/^\s*\[?\]/  skip=/^$/ end=/^\s*\[/re=s-1,he=s-1,me=s-1  contains=@rstBasics
-syntax region   todoItemInProgress  start=/^\s*\[_\]/ skip=/^$/ end=/^\s*\[/re=s-1,he=s-1,me=s-1  contains=@rstBasics
-syntax region   todoItemNew         start=/^\s*\[\.\]/ skip=/^$/ end=/^\s*\[/re=s-1,he=s-1,me=s-1 contains=@rstBasics
+syntax region   todoItemDone        start=/^\s*\[x\]/  skip=/^$/ end=/^\s*\[\(x\|?\|_\|\.\)\]/re=s-3,he=s-3,me=s-3
+syntax region   todoItemQuestion    start=/^\s*\[?\]/  skip=/^$/ end=/^\s*\[\(x\|?\|_\|\.\)\]/re=s-3,he=s-3,me=s-3 contains=@rstBasics
+syntax region   todoItemInProgress  start=/^\s*\[_\]/ skip=/^$/  end=/^\s*\[\(x\|?\|_\|\.\)\]/re=s-3,he=s-3,me=s-3 contains=@rstBasics
+syntax region   todoItemNew         start=/^\s*\[\.\]/ skip=/^$/ end=/^\s*\[\(x\|?\|_\|\.\)\]/re=s-3,he=s-3,me=s-3 contains=@rstBasics
 syntax match    magicLine           /^#\s*vi:.*:\s*$/
 
 hi todoItemDone       ctermfg=065
