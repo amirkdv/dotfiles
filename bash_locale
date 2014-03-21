@@ -6,6 +6,7 @@ setup_locale(){
 This system does not have $locale installed.
 You can install it using the following:
 [sudo] locale-gen $locale
+[sudo] update-locale LANG=$locale
 
 Then you can simply source this file again:
 source ~/.bash_locale && setup_locale $locale
