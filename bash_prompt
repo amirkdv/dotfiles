@@ -13,7 +13,7 @@ setup_prompt(){
   #NOTE $ has to be escaped to avoid subshells' immediate evaluation
   local -r exit_code="\$(c=\$?; [[ \$c == 0 ]] && echo \"${green}[+]\" || echo \"${red}[-]\")"
   local -r fqdn="\$(hostname --fqdn)"
-  local -r user="\$(logname)"
+  local -r user="\$(whoami)"
   local -r git_branch=" \$(which git >/dev/null && git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/(\1)/')"
   local -r pwd_color="\$( if [[ $fqdn =~ jupiter|neptune|imac-amir ]]; then echo \"${purple}\";else echo \"${yellow}\"; fi)"
   #NOTE if user is root make cursor red
