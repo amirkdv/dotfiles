@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+declare -r deb_src='https://thoughtbot.github.io/rcm/debs/rcm_1.2.1-2_all.deb'
+declare -r ssh_conf_dir="$HOME/.ssh"
+declare -r gh_keyreq_url='https://api.github.com/users/amirkdv/keys'
+declare -r json_extract_py='import sys, json; data=json.loads(sys.stdin.read()); print data[0]["key"]'
+
+main(){
+  if [[ ! -d "$HOME" ]]; then
+    echo "\$HOME is '$HOME'; no such directory exists"
+    exit 1
+  fi
+  dpkg -L rcm 2>/dev/null 1>&2 || install_rcm
+  echo -e "y\n" | HOME=/root rcup -d "$( dirname $0 )"
+  configure_locale
+  install_pubkey
+}
+
+install_rcm(){
+  declare -r deb_dst='/root/rcm.deb'
+  wget "$deb_src" --output-document="$deb_dst"
+  dpkg -i "$deb_dst"
+}
+
+configure_locale(){
+  locale-gen en_CA.utf8 && update-locale LANG=en_CA.utf8
+}
+
+install_pubkey(){
+  declare -r authorized_keys="$ssh_conf_dir/authorized_keys"
+  mkdir -p "$ssh_conf_dir" && chmod 700 "$ssh_conf_dir"
+  touch "$authorized_keys" && chmod 600 "$authorized_keys"
+  wget -qO- "$gh_keyreq_url" | python -c  "$json_extract_py" >> "$authorized_keys"
+}
+
+main
