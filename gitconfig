@@ -10,6 +10,7 @@
   changed = yellow
   untracked = cyan
 [alias]
+  ls = ls-files
   l  = log
   lp = log --patch
   st = status
