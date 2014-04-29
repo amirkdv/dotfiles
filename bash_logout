@@ -4,4 +4,4 @@
 if [ "$SHLVL" = 1 ]; then
     [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
 fi
-[[ -f ~/.bash_ssh ]] && source ~/.bash_ssh && remove_identity
+[[ -f ~/.bash_ssh_agent ]] && source ~/.bash_ssh_agent && remove_identity
