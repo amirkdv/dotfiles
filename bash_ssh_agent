@@ -17,7 +17,9 @@ add_identity(){
   fi
 }
 remove_identity(){
-  ssh-add -D
-  unset SSH_AGENT_PID
-  unset SSH_AUTH_SOCK
+  if env | grep -q SSH_AGENT_PID; then
+    ssh-add -D
+    unset SSH_AGENT_PID
+    unset SSH_AUTH_SOCK
+  fi
 }
