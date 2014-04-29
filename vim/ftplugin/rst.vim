@@ -4,19 +4,18 @@
 
 syn region rstStrongEmphasis start=/\*\*[^*]/ end=/\*\*/
 syn region rstInlineLiteral start=/``/ end=/``/ contains=rstURL
-syn region rstSubstitutionReference start=/|\w/ end=/\w|/ skip=/\\|/
+syn match magicLine /^#\s*vim\?:.*:\s*$/
 syn match rstBulletedList /^\s*\([+-]\|\*\)\s/
 syn match rstEnumeratedList /^\s*[a-zA-Z0-9]\.\s/
 syn match rstURL /\(file\|ftp\|http\|https\|mailto\):[-./[:alnum:]_~@:#%?!=+]\+/
-syntax match    magicLine         /^#\s*vim\?:.*:\s*$/
-highlight rstURL            ctermfg=081
-highlight rstEmphasis       ctermfg=223 ctermbg=none cterm=none
-highlight rstStrongEmphasis ctermfg=217
-hi link rstInlineLiteral Title
+hi rstURL             ctermfg=081
+hi rstEmphasis        ctermfg=223 ctermbg=none cterm=none
+hi rstStrongEmphasis  ctermfg=217
+hi link rstInlineLiteral   rstLiteralBlock
 hi link rstBulletedList Keyword
 hi link rstEnumeratedList Keyword
 hi link rstTitle MatchParen
-highlight magicLine           ctermfg=245
+hi magicLine          ctermfg=245
 
 " embed todo syntax for embedded blocks, hack follows:
 let b:current_syntax = ''
