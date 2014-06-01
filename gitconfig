@@ -2,7 +2,7 @@
   ui = true
 [user]
   name = Amir Kadivar
-  email= amir.h.kadivar@gmail.com
+  email= amir@amirkdv.ca
 [push]
   default = upstream
 [color "status"]
