@@ -9,7 +9,7 @@ if exists("b:current_syntax")
   finish
 endif
 " rstBasics:
-syn region  rstLiteralBlock   start='::\_s*\n\ze\z\(\a\+\)' skip='^$' end='^\z1\@!$' contained extend
+syn region  rstLiteralBlock   start='::\n\z\(\s\+\)' skip='^$' end='^\z1\@!' contained extend
 syn region  rstEmphasis       start=/\*[^*]/    end=/\*/    contained
 syn region  rstStrongEmphasis start=/\*\*[^*]/  end=/\*\*/  contained
 syn region  rstInlineLiteral  start=/``/        end=/``/    contains=rstURL contained
@@ -17,22 +17,21 @@ syn match   rstBulletedList   /^\s*\([+-]\|\*\)\s/          contained
 syn match   rstEnumeratedList /^\s*[a-zA-Z0-9]\.\s/         contained
 syn match   rstURL /\(file\|ftp\|http\|https\|mailto\):[-./[:alnum:]_~@:#%?!=+,]\+/ contained
 syn cluster rstBasics contains=rstEmphasis,rstStrongEmphasis,rstInlineLiteral,rstURL,rstBulletedList,rstEnumeratedList,rstLiteralBlock
-highlight   rstURL            ctermfg=081
-highlight   rstEmphasis       ctermfg=223 ctermbg=none cterm=none
-highlight   rstStrongEmphasis ctermfg=217
+hi rstURL            ctermfg=081
+hi rstEmphasis       ctermfg=223 ctermbg=none cterm=none
+hi rstStrongEmphasis ctermfg=217
 hi link     rstBulletedList   Keyword
 hi link     rstEnumeratedList Keyword
 hi link     rstTitle          MatchParen
 
-
-" [.] new/postponed
+" [ ] new
 " [_] in progress/pending
-" [x] done/wont-fix
+" [x] done/wont-fix/postponed
 " [?] idea/question
-syntax region   todoItemDone        start=/^\s*\[x\]/  skip=/^$/ end=/^\s*\[\(x\|?\|_\|\.\)\]/re=s-3,he=s-3,me=s-3
-syntax region   todoItemQuestion    start=/^\s*\[?\]/  skip=/^$/ end=/^\s*\[\(x\|?\|_\|\.\)\]/re=s-3,he=s-3,me=s-3 contains=@rstBasics
-syntax region   todoItemInProgress  start=/^\s*\[_\]/ skip=/^$/  end=/^\s*\[\(x\|?\|_\|\.\)\]/re=s-3,he=s-3,me=s-3 contains=@rstBasics
-syntax region   todoItemNew         start=/^\s*\[\.\]/ skip=/^$/ end=/^\s*\[\(x\|?\|_\|\.\)\]/re=s-3,he=s-3,me=s-3 contains=@rstBasics
+syntax region   todoItemDone        start=/^\s*\[x\]/  skip=/^$/ end=/^\s*\[\(x\|?\|_\|\ \)\]/re=s-3,he=s-3,me=s-3
+syntax region   todoItemQuestion    start=/^\s*\[?\]/  skip=/^$/ end=/^\s*\[\(x\|?\|_\|\ \)\]/re=s-3,he=s-3,me=s-3 contains=@rstBasics
+syntax region   todoItemInProgress  start=/^\s*\[_\]/ skip=/^$/  end=/^\s*\[\(x\|?\|_\|\ \)\]/re=s-3,he=s-3,me=s-3 contains=@rstBasics
+syntax region   todoItemNew         start=/^\s*\[\ \]/ skip=/^$/ end=/^\s*\[\(x\|?\|_\|\ \)\]/re=s-3,he=s-3,me=s-3 contains=@rstBasics
 syntax match    magicLine           /^#\s*vi:.*:\s*$/
 
 hi todoItemDone       ctermfg=065
@@ -49,8 +48,8 @@ hi magicLine          ctermfg=245
 nnoremap <buffer> tdx ma j :silent!?^\s*\[.\]?s/^\(\s*\)\[.\]/\1[x]/  <bar> nohlsearch<cr> `a
 vnoremap <buffer> tdx :s/^\(\s*\)\[.\]/\1[x]/ <bar> nohlsearch<cr>
 
-nnoremap <buffer> td. ma j :silent!?^\s*\[.\]?s/^\(\s*\)\[.\]/\1[.]/  <bar> nohlsearch<cr> `a
-vnoremap <buffer> td. :s/^\(\s*\)\[.\]/\1[.]/  <bar> nohlsearch<cr>
+nnoremap <buffer> td ma j :silent!?^\s*\[.\]?s/^\(\s*\)\[.\]/\1[ ]/  <bar> nohlsearch<cr> `a
+vnoremap <buffer> td :s/^\(\s*\)\[.\]/\1[ ]/  <bar> nohlsearch<cr>
 
 nnoremap <buffer> td_ ma j :silent!?^\s*\[.\]?s/^\(\s*\)\[.\]/\1[_]/  <bar> nohlsearch<cr> `a
 vnoremap <buffer> td_ :s/^\(\s*\)\[.\]/\1[_]/  <bar> nohlsearch<cr>
