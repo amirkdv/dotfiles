@@ -7,7 +7,7 @@ syn region rstInlineLiteral start=/``/ end=/``/ contains=rstURL
 syn match magicLine /^#\s*vim\?:.*:\s*$/
 syn match rstBulletedList /^\s*\([+-]\|\*\)\s/
 syn match rstEnumeratedList /^\s*[a-zA-Z0-9]\.\s/
-syn match rstURL /\(file\|ftp\|http\|https\|mailto\):[-./[:alnum:]_~@:#%?!=+]\+/
+syn match rstURL /\(file\|ftp\|http\|https\|mailto\):[-./[:alnum:]_~@:#%?!=+,]\+/
 hi rstURL             ctermfg=081
 hi rstEmphasis        ctermfg=223 ctermbg=none cterm=none
 hi rstStrongEmphasis  ctermfg=217
