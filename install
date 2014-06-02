@@ -1,38 +1,64 @@
 #!/bin/bash
 
+# set -ue
 set -o errexit
 set -o nounset
-declare -r deb_src='https://thoughtbot.github.io/rcm/debs/rcm_1.2.1-2_all.deb'
-declare -r ssh_conf_dir="$HOME/.ssh"
-declare -r gh_keyreq_url='https://api.github.com/users/amirkdv/keys'
-declare -r json_extract_py='import sys, json; data=json.loads(sys.stdin.read()); print data[0]["key"]'
+# find the real username and home directory: for some reason docker overrides
+# $HOME and $USER
+USER=$( whoami )
+HOME=$( eval echo ~$USER )
+# don't use sudo if current user is root
+[[ $USER == 'root' ]] && sudo='' || sudo=sudo
 
 main(){
-  if [[ ! -d "$HOME" ]]; then
-    echo "\$HOME is '$HOME'; no such directory exists"
-    exit 1
+  # abort if current user can sudo
+  [[ $USER == 'root' ]] || sudo -l >/dev/null || exit 1
+  # configure locale if root
+  [[ $USER == 'root' ]] && locale-gen en_CA.utf8 && update-locale LANG=en_CA.utf8
+  # install files
+  if ! $( which rcup >/dev/null ); then
+    install rcm
   fi
-  dpkg -L rcm 2>/dev/null 1>&2 || install_rcm
-  echo -e "y\n" | HOME=/root rcup -d "$( dirname $0 )"
-  configure_locale
-  install_pubkey
+  install_dotfiles
+  echo "all set!" >& 2
 }
 
-install_rcm(){
-  declare -r deb_dst='/root/rcm.deb'
-  wget "$deb_src" --output-document="$deb_dst"
-  dpkg -i "$deb_dst"
+install() {
+  package=$1
+  echo "Installing $package"
+  case $package in
+    rcm)
+      deb_src='http://thoughtbot.github.io/rcm/debs/rcm_1.2.1-2_all.deb'
+      bob=$( echo ~$USER )
+      deb_dst=$HOME/rcm.deb
+      wget "$deb_src" --output-document=$deb_dst
+      $sudo dpkg -i $deb_dst
+      ;;
+    *)
+      $sudo apt-get install -y $package
+      ;;
+  esac
 }
 
-configure_locale(){
-  locale-gen en_CA.utf8 && update-locale LANG=en_CA.utf8
-}
-
-install_pubkey(){
-  declare -r authorized_keys="$ssh_conf_dir/authorized_keys"
+install_dotfiles(){
+  rcup -f -d "$( dirname $0 )"
+  # install pubkey from github
+  ssh_conf_dir=$HOME/.ssh
   mkdir -p "$ssh_conf_dir" && chmod 700 "$ssh_conf_dir"
-  touch "$authorized_keys" && chmod 600 "$authorized_keys"
-  wget -qO- "$gh_keyreq_url" | python -c  "$json_extract_py" >> "$authorized_keys"
+  authorized_keys=$ssh_conf_dir/authorized_keys
+  # the ssh-import-id package currently does not
+  touch $authorized_keys && chmod 600 $authorized_keys
+  if which ssh-import-id >/dev/null 2>&1; then
+    version=$( $sudo dpkg -l | grep ssh-import-id | awk '{ print $3 }' )
+    if [[ $version =~ ^3. ]]; then
+      # ssh-import-id 2.* does not support GitHub
+      ssh-import-id gh:amirkdv
+      return
+    fi
+  fi
+  url='https://api.github.com/users/amirkdv/keys'
+  echo "ssh-import-id not found, accessing $url" >& 2
+  wget -qO- "$url" | grep key | cut -d'"' -f4 >> "$authorized_keys"
 }
 
 main
