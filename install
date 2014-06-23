@@ -41,7 +41,9 @@ install() {
 }
 
 install_dotfiles(){
-  rcup -f -d "$( dirname $0 )"
+  set -x
+  rcup -f -d "$( dirname $0 )" -x install -x README.md
+  set +x
   # install pubkey from github
   ssh_conf_dir=$HOME/.ssh
   mkdir -p "$ssh_conf_dir" && chmod 700 "$ssh_conf_dir"
