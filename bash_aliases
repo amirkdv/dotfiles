@@ -4,5 +4,5 @@ if [ -x /usr/bin/dircolors ]; then
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
 fi
-alias ll="ls -alh"
+alias ll="ls -alh --group-directories-first"
 alias tree="tree -a -C"
