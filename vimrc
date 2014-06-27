@@ -42,11 +42,12 @@ set scrolloff=10        " keep the cursor 10 lines away from the edges
 " nicer pageup/down
 noremap   <C-j>   10j
 noremap   <C-k>   10k
-noremap   <C-l>   4w     " disables the original functionality: redraw
-noremap   <C-h>   4b
 " nicer tab navigation
+noremap   <C-l> :tabm +1 <cr>
+noremap   <C-h> :tabm -1 <cr>
 nnoremap  <tab>   gt
 nnoremap  <s-tab> gT
+nnoremap  <C-t>   :tabe<cr>
 " use <leader> instead of Ctrl for splits
 noremap   <leader>v     <C-w>v
 noremap   <leader>s     <C-w>s
@@ -87,10 +88,7 @@ set expandtab
 "----------------------------------------------------------------------
 " Text Handling
 "----------------------------------------------------------------------
-" break current line at current position and stay in insert mode
-nnoremap <C-Enter> i<cr>
 " yank/paste to/from clipboard
-"TODO run :set nolist before yanking:
 noremap <leader>y "+y
 noremap <leader>p "+p
 " Paste when clipboard forwarding is not working:
