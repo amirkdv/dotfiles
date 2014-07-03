@@ -1,13 +1,23 @@
 " Vim syntax file
 " Language: todo
 " By: Amir Kadivar
-" Requires: syntax/rest.vim in runtimepath
+" Usage example:
+" [ ] This is a new item
+"     [ ] a subitem; some *basic* rst is supported
+" [_] item in progress
+"     [x] closed subitem (fixed), demonstrating usage of ``ls``::
+"           # example code block
+"           ls -al /var/share/
+"     [_] an in progress item, when finished use the following::
+"           tdx
+"         in normal mode while the cursor is anywhere within the
+"         contents of this item and it will be marked as done ([x]).
+" [?] sometimes it's not a task, but a question, or an idea.
 
-" include reStructuredText syntax file and use its elements as @rst group
-" syn-include will mark all syntax items from included file as 'contained'
 if exists("b:current_syntax")
   finish
 endif
+
 " rstBasics:
 syn region  rstLiteralBlock   start='::\n\z\(\s\+\)' skip='^$' end='^\z1\@!' contained extend
 syn region  rstEmphasis       start=/\*[^*]/    end=/\*/    contained
