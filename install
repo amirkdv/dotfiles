@@ -1,66 +1,101 @@
 #!/bin/bash
 
-# set -ue
-set -o errexit
-set -o nounset
-# find the real username and home directory: for some reason docker overrides
-# $HOME and $USER
+set -u
+# find the real username and home directory in case this is a non-login shell,
+# e.g. in a docker build.
 USER=$( whoami )
 HOME=$( eval echo ~$USER )
-# don't use sudo if current user is root
-[[ $USER == 'root' ]] && sudo='' || sudo=sudo
 
-main(){
-  # abort if current user can sudo
-  [[ $USER == 'root' ]] || sudo -l >/dev/null || exit 1
-  # configure locale if root
-  [[ $USER == 'root' ]] && locale-gen en_CA.utf8 && update-locale LANG=en_CA.utf8
-  # install files
-  if ! $( which rcup >/dev/null ); then
-    install rcm
+[ $USER = root ] && sudo= || sudo=sudo
+current_dir=$( dirname $0 )
+success_tpl='Successfully installed %s\n'
+failure_tpl='Failed to install %s\n'
+
+privileged(){
+  satisfied=yes
+  [ $USER = root ] || sudo -l >/dev/null || satisfied=no
+  if ! [ $satisfied = yes ]; then
+    echo 'Error: root privileges are required for this action' >&2
+    return 1
   fi
-  install_dotfiles
-  echo "all set!" >& 2
 }
 
-install() {
-  package=$1
-  echo "Installing $package"
-  case $package in
-    rcm)
-      deb_src='http://thoughtbot.github.io/rcm/debs/rcm_1.2.1-2_all.deb'
-      bob=$( echo ~$USER )
-      deb_dst=$HOME/rcm.deb
-      wget "$deb_src" --output-document=$deb_dst
-      $sudo dpkg -i $deb_dst
+main(){
+  case "$1" in
+    dotfiles)
+      if ! which rcup >/dev/null; then
+        if privileged; then
+          install_rcm
+        else
+          printf 'Installing rcm requires root privileges\n' >&2
+          printf "$failure_tpl" dotfiles >&2
+          return 1
+        fi
+      fi
+      rcup -f -d "$current_dir" -x install -x README.md
+      ;;
+    pubkey)
+      install_pubkey
+      status=0
+      ;;
+    locale)
+      if privileged; then
+        $sudo locale-gen en_CA.utf8 && $sudo update-locale LANG=en_CA.utf8
+        status=0
+      else
+        printf 'Installing locale requires root privileges' >&2
+        return 1
+      fi
       ;;
     *)
-      $sudo apt-get install -y $package
+      printf "I don't know how to install %s\n" $1 >&2
+      return 1
       ;;
   esac
 }
 
-install_dotfiles(){
-  set -x
-  rcup -f -d "$( dirname $0 )" -x install -x README.md
-  set +x
-  # install pubkey from github
+install_rcm() {
+  echo "Installing rcm ..."
+  deb_src='http://thoughtbot.github.io/rcm/debs/rcm_1.2.1-2_all.deb'
+  deb_dst=$HOME/rcm.deb
+  wget "$deb_src" --output-document="$deb_dst"
+  $sudo dpkg -i "$deb_dst"
+}
+
+install_pubkey(){
   ssh_conf_dir=$HOME/.ssh
+  gh_api_url='https://api.github.com/users/amirkdv/keys'
   mkdir -p "$ssh_conf_dir" && chmod 700 "$ssh_conf_dir"
   authorized_keys=$ssh_conf_dir/authorized_keys
   # the ssh-import-id package currently does not
   touch $authorized_keys && chmod 600 $authorized_keys
+
+  pubkey_installed=
   if which ssh-import-id >/dev/null 2>&1; then
-    version=$( $sudo dpkg -l | grep ssh-import-id | awk '{ print $3 }' )
-    if [[ $version =~ ^3. ]]; then
-      # ssh-import-id 2.* does not support GitHub
+    major_version=$( $sudo dpkg -l | grep ssh-import-id | awk '{ print $3 }' | cut -c1 )
+    if [ $major_version -ge 3 ]; then
       ssh-import-id gh:amirkdv
-      return
+      pubkey_installed=yes
+    else
+      printf 'ssh-import-id 2.* does not support GitHub, falling back on %s\n' $gh_api_url >&2
     fi
+  else
+    printf 'ssh-import-id not found, falling back on %s\n' $gh_api_url >&2
   fi
-  url='https://api.github.com/users/amirkdv/keys'
-  echo "ssh-import-id not found, accessing $url" >& 2
-  wget -qO- "$url" | grep key | cut -d'"' -f4 >> "$authorized_keys"
+  if [ -z $pubkey_installed ]; then
+    wget -qO- "$gh_api_url" | grep key | cut -d'"' -f4 >> "$authorized_keys"
+  fi
 }
 
-main
+[ $# = 0 ] && echo 'specify what to install: dotfiles|pubkey|locale' >&2 && exit 1
+code=0
+for i in "$@"; do
+  ( main "$i" )
+  if [ $? -eq 0 ]; then
+    printf "$success_tpl" $i >&2
+  else
+    printf "$failure_tpl" $i >&2
+    code=1
+  fi
+done
+exit $code
