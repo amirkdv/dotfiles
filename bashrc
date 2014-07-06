@@ -27,6 +27,13 @@ shopt -s checkwinsize
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
+
+GOROOT=/usr/local/go
+if [[ -d $GOROOT ]]; then
+  export GOROOT
+  export PATH="$GOROOT/bin:$PATH"
+fi
+
 [[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
 [[ -f /etc/bash_completion ]] && ! shopt -oq posix && source /etc/bash_completion
 [[ -f ~/.bash_ssh_agent ]] && source ~/.bash_ssh_agent && start_agent && add_identity
