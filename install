@@ -7,16 +7,53 @@ USER=$( whoami )
 HOME=$( eval echo ~$USER )
 
 [ $USER = root ] && sudo= || sudo=sudo
-current_dir=$( dirname $0 )
-success_tpl='Successfully installed %s\n'
-failure_tpl='Failed to install %s\n'
+current_dir="$( dirname "$( readlink -f $0 )")"
+
+log(){ printf -- "---> $1\n" >&2; }
 
 privileged(){
-  satisfied=yes
-  [ $USER = root ] || sudo -l >/dev/null || satisfied=no
-  if ! [ $satisfied = yes ]; then
-    echo 'Error: root privileges are required for this action' >&2
+  if [ $USER = root ]; then
+    return 0
+  else
+    which sudo >/dev/null && sudo -l >/dev/null 2>&1
+    return $?
+  fi
+}
+
+install_rcm() {
+  log 'Installing rcm ...'
+  local deb_src='http://thoughtbot.github.io/rcm/debs/rcm_1.2.1-2_all.deb'
+  local deb_dst=$HOME/rcm.deb
+  wget -qO "$deb_dst" "$deb_src" && $sudo dpkg -i "$deb_dst" >/dev/null 2>&1
+}
+
+install_pubkey(){
+  local ssh_conf_dir=$HOME/.ssh
+  local gh_api_url='https://api.github.com/users/amirkdv/keys'
+  mkdir -p "$ssh_conf_dir" && chmod 700 "$ssh_conf_dir"
+  authorized_keys=$ssh_conf_dir/authorized_keys
+  # the ssh-import-id package currently does not
+  touch $authorized_keys && chmod 600 $authorized_keys
+
+  local pubkey_installed=
+  if which ssh-import-id >/dev/null 2>&1; then
+    if ssh-import-id gh:amirkdv >/dev/null 2>&1; then
+      log 'fetched public key via ssh-import-id gh:amirkdv'
+      return 0
+    else
+      log "ssh-import-id failed, potentially since versions below 3.x do not support GitHub"
+      log "falling back on $gh_api_url"
+    fi
+  else
+    log "ssh-import-id not found, falling back on $gh_api_url"
+  fi
+  local key="$(wget -qO- "$gh_api_url" | grep key | cut -d'"' -f4)"
+  if [ "$key" = '' ]; then
+    log "Failed to fetch public key from $gh_api_url"
     return 1
+  else
+    printf "$key\n" >> "$authorized_keys"
+    log "$key"
   fi
 }
 
@@ -25,76 +62,44 @@ main(){
     dotfiles)
       if ! which rcup >/dev/null; then
         if privileged; then
-          install_rcm
+          install_rcm || return 1
         else
-          printf 'Installing rcm requires root privileges\n' >&2
-          printf "$failure_tpl" dotfiles >&2
+          log 'Installing rcm requires root privileges'
           return 1
         fi
       fi
-      rcup -f -d "$current_dir" -x install -x README.md
+      log 'installing dotfiles'
+      rcup -f -d "$current_dir" -x install -x README.md 2>&1 | sed 's/^/  ---> /' >&2
+      return $?
       ;;
     pubkey)
       install_pubkey
-      status=0
+      return $?
       ;;
     locale)
       if privileged; then
         $sudo locale-gen en_CA.utf8 && $sudo update-locale LANG=en_CA.utf8
-        status=0
+        return $?
       else
-        printf 'Installing locale requires root privileges' >&2
+        log 'Installing locale requires root privileges'
         return 1
       fi
       ;;
     *)
-      printf "I don't know how to install %s\n" $1 >&2
+      log "I don't know what to do with $1"
       return 1
       ;;
   esac
 }
 
-install_rcm() {
-  echo "Installing rcm ..."
-  deb_src='http://thoughtbot.github.io/rcm/debs/rcm_1.2.1-2_all.deb'
-  deb_dst=$HOME/rcm.deb
-  wget "$deb_src" --output-document="$deb_dst"
-  $sudo dpkg -i "$deb_dst"
-}
-
-install_pubkey(){
-  ssh_conf_dir=$HOME/.ssh
-  gh_api_url='https://api.github.com/users/amirkdv/keys'
-  mkdir -p "$ssh_conf_dir" && chmod 700 "$ssh_conf_dir"
-  authorized_keys=$ssh_conf_dir/authorized_keys
-  # the ssh-import-id package currently does not
-  touch $authorized_keys && chmod 600 $authorized_keys
-
-  pubkey_installed=
-  if which ssh-import-id >/dev/null 2>&1; then
-    major_version=$( $sudo dpkg -l | grep ssh-import-id | awk '{ print $3 }' | cut -c1 )
-    if [ $major_version -ge 3 ]; then
-      ssh-import-id gh:amirkdv
-      pubkey_installed=yes
-    else
-      printf 'ssh-import-id 2.* does not support GitHub, falling back on %s\n' $gh_api_url >&2
-    fi
-  else
-    printf 'ssh-import-id not found, falling back on %s\n' $gh_api_url >&2
-  fi
-  if [ -z $pubkey_installed ]; then
-    wget -qO- "$gh_api_url" | grep key | cut -d'"' -f4 >> "$authorized_keys"
-  fi
-}
-
-[ $# = 0 ] && echo 'specify what to install: dotfiles|pubkey|locale' >&2 && exit 1
+[ $# = 0 ] && log 'specify what to install: dotfiles|pubkey|locale' && exit 1
 code=0
 for i in "$@"; do
-  ( main "$i" )
+  main "$i"
   if [ $? -eq 0 ]; then
-    printf "$success_tpl" $i >&2
+    log "Successfully installed $i"
   else
-    printf "$failure_tpl" $i >&2
+    log "Failed to install $i"
     code=1
   fi
 done
