@@ -31,7 +31,7 @@ syn match yamlIndicator	"#YAML:\S\+"
 
 syn region yamlString	start="\W\zs'" end="'" skip="\\'"
 syn region yamlString	start='"' end='"' skip='\\"' contains=yamlEscape
-syn region yamlLiteralBlock start='|\n\z\(\s\+\)' end='^\z1\@!'
+syn region yamlLiteralBlock start='|\n\z\(\s\+\)' skip='^\s*$' end='^\z1\@!'
 syn match  yamlEscape	+\\[abfnrtv'"\\]+ contained
 syn match  yamlEscape	"\\\o\o\=\o\=" contained
 syn match  yamlEscape	"\\x\x\+" contained
