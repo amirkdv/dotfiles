@@ -47,7 +47,6 @@ noremap   <C-l> :tabm +1 <cr>
 noremap   <C-h> :tabm -1 <cr>
 nnoremap  <tab>   gt
 nnoremap  <s-tab> gT
-nnoremap  <C-t>   :tabe<cr>
 " use <leader> instead of Ctrl for splits
 noremap   <leader>v     <C-w>v
 noremap   <leader>s     <C-w>s
