@@ -6,11 +6,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 alias ll="ls -alh --group-directories-first"
 alias tree="tree -a -C"
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
 
-if which trash-put >/dev/null 2>&1; then
-  alias rm='echo "you probably want to use trash-put (t-p), if not use \rm" ; false'
-  alias t-p='trash-put -v'
-  alias t-l='trash-list'
-else
-  echo "trash-cli is not installed, install via: \`pip install trash-cli'" >&2
-fi
