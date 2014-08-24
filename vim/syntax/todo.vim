@@ -33,6 +33,7 @@ hi rstStrongEmphasis ctermfg=217
 hi link     rstBulletedList   Keyword
 hi link     rstEnumeratedList Keyword
 hi link     rstTitle          MatchParen
+hi link     rstLiteralBlock   String
 
 " [ ] new
 " [_] in progress/pending
