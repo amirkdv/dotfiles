@@ -34,8 +34,19 @@ if [[ -d $GOROOT ]]; then
   export PATH="$GOROOT/bin:$PATH"
 fi
 
+case $OSTYPE in
+  darwin*)
+    declare -r locale_name=en_CA.UTF-8
+    ;;
+  linux-gnu)
+    declare -r locale_name=en_CA.utf8
+    ;;
+esac
 [[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
 [[ -f /etc/bash_completion ]] && ! shopt -oq posix && source /etc/bash_completion
 [[ -f ~/.bash_ssh_agent ]] && source ~/.bash_ssh_agent && start_agent && add_identity
 [[ -f ~/.bash_prompt ]] && source ~/.bash_prompt && setup_prompt
-[[ -f ~/.bash_locale ]] && source ~/.bash_locale && setup_locale en_CA.utf8
+[[ -f ~/.bash_locale ]] && source ~/.bash_locale && setup_locale "$locale_name"
+
+# add /usr/sbin and /usr/local/bin to PATH on Mac
+[[ "$OSTYPE" == "darwin"* ]] && PATH=$PATH:/usr/sbin:/usr/local/sbin || :

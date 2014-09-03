@@ -1,10 +1,22 @@
 #!/bin/bash
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-fi
-alias ll="ls -alh --group-directories-first"
+declare lscolorflag=
+declare lsgroupdirsflag=
+declare grepcolorflag='--color=auto'
+case $OSTYPE in
+  darwin*)
+    lscolorflag='-G'
+    ;;
+  linux-gnu)
+    lsgroupdirsflag='--group-directories-first'
+    alias ll='ls -alh --group-directories-first'
+    if [ -x /usr/bin/dircolors ]; then
+        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+        lscolorflag='--color=auto'
+    fi
+    ;;
+esac
+alias ll="ls -alh $lsgroupdirsflag $lscolorflag"
+alias grep="grep $grepcolorflag"
 alias tree="tree -a -C"
 alias rm='rm -i'
 alias cp='cp -i'
