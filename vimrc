@@ -2,6 +2,7 @@ filetype plugin on
 syntax on
 scriptencoding utf-8
 set encoding=utf-8
+set guifont=Inconsolata:h16
 let mapleader=";"
 "----------------------------------------------------------------------
 " Colors, Highilights, and General Look
