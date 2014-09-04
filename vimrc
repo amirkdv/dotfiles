@@ -45,8 +45,8 @@ set scrolloff=10        " keep the cursor 10 lines away from the edges
 noremap   <C-j>   10j
 noremap   <C-k>   10k
 " nicer tab navigation
-noremap   <C-l> :tabm +1 <cr>
-noremap   <C-h> :tabm -1 <cr>
+noremap   <C-s-PageDown> :tabm +1 <cr>
+noremap   <C-s-PageUp> :tabm -1 <cr>
 nnoremap  <tab>   gt
 nnoremap  <s-tab> gT
 " use <leader> instead of Ctrl for splits
