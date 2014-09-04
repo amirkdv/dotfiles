@@ -7,7 +7,7 @@ USER=$( whoami )
 HOME=$( eval echo ~$USER )
 
 [ $USER = root ] && sudo= || sudo=sudo
-current_dir="$( dirname "$( readlink -f $0 )")"
+current_dir="$(dirname "$0")"
 
 log(){ printf -- "---> $1\n" >&2; }
 
@@ -22,9 +22,17 @@ privileged(){
 
 install_rcm() {
   log 'Installing rcm ...'
-  local deb_src='http://thoughtbot.github.io/rcm/debs/rcm_1.2.1-2_all.deb'
-  local deb_dst=$HOME/rcm.deb
-  wget -qO "$deb_dst" "$deb_src" && $sudo dpkg -i "$deb_dst" >/dev/null 2>&1
+  case $OSTYPE in
+    darwin*)
+      brew tap thoughtbot/formulae
+      brew install rcm
+      ;;
+    linux-gnu)
+      declare -r deb_src='http://thoughtbot.github.io/rcm/debs/rcm_1.2.1-2_all.deb'
+      declare -r deb_dst=$HOME/rcm.deb
+      wget -qO "$deb_dst" "$deb_src" && $sudo dpkg -i "$deb_dst" >/dev/null 2>&1
+      ;;
+  esac
 }
 
 install_pubkey(){
