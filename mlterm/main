@@ -13,3 +13,4 @@ fg_color=white
 # See ~/.mlterm/aafont
 iso88591_font_for_usascii= true
 encoding=utf8
+clip=true
