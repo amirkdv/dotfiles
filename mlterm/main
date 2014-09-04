@@ -1,0 +1,15 @@
+# For 256 color to RGB conversions refer to:
+# http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+
+fontsize=17
+geometry=200x200
+use_bold_font=false
+borderless = true
+use_scrollbar=false
+static_backscroll_mode=true
+# See ~/.mlterm/color
+bg_color=#111
+fg_color=white
+# See ~/.mlterm/aafont
+iso88591_font_for_usascii= true
+encoding=utf8

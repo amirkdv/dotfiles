@@ -1,0 +1,14 @@
+# vi: set ft=conf :
+# Anti-alias font configuration for mlterm, this file is activated due to
+#   use_anti_alias=true (default)
+# in ~/.mlterm/main
+# See:
+# - /etc/mlterm/*
+# - http://mlterm.sourceforge.net/mlterm.1.html
+# - http://behdad.org/text/
+
+# Font for ISO-8859 charset; see https://en.wikipedia.org/wiki/ISO/IEC_8859
+ISO8859_1=Inconsolata;
+# Font for ISO-10646 charset; seen ttps://en.wikipedia.org/wiki/Universal_Character_Set
+# Get the font from http://openfontlibrary.org/fr/font/freefarsi-monospace
+ISO10646_UCS4_1=FreeFarsi Monospace;

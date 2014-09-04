@@ -1,0 +1,6 @@
+# vi: set ft=conf :
+# set the RGB equivalents for color short hands. numerical lables are
+# interpretted as xterm 256 color codes.
+4=#6a95b1
+12=#6a95b1
+white=#dedede
