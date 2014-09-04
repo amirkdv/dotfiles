@@ -11,11 +11,13 @@ start_agent(){
     start_agent # will print SSH_AGENT_PID
   fi
 }
+
 add_identity(){
   if ! ssh-add -l >/dev/null 2>&-; then
     ssh-add
   fi
 }
+
 remove_identity(){
   if env | grep -q SSH_AGENT_PID; then
     ssh-add -D
