@@ -11,4 +11,12 @@
 ISO8859_1=Inconsolata;
 # Font for ISO-10646 charset; seen ttps://en.wikipedia.org/wiki/Universal_Character_Set
 # Get the font from http://openfontlibrary.org/fr/font/freefarsi-monospace
-ISO10646_UCS4_1=FreeFarsi Monospace;
+#
+# ISO10646_UCS4_1=FreeFarsi Monospace;
+#
+# Issue: the ISO-10646 charset for Arabic/Farsi/Urdu contains special characters
+# that not all fonts support (e.g. tmux's horizontal lines, curly quotes, and
+# long dashes break). Instead specify the unicode sequenence for which to use
+# the Farsi font (unicode range found by looking at the font charset in
+# FontMatrix or the like).
+U+0600-06f9=FreeFarsi Monospace;

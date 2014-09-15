@@ -50,3 +50,5 @@ esac
 
 # add /usr/sbin and /usr/local/bin to PATH on Mac OS X for homebrew.
 [[ "$OSTYPE" == "darwin"* ]] && PATH=$PATH:/usr/sbin:/usr/local/sbin || :
+# start tmux automatically, force 256 colors
+which tmux >/dev/null && [[ -z $TMUX ]] && tmux -2
