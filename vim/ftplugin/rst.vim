@@ -8,9 +8,9 @@ syn match magicLine /^#\s*vim\?:.*:\s*$/
 syn match rstBulletedList /^\s*\([+-]\|\*\)\s/
 syn match rstEnumeratedList /^\s*[a-zA-Z0-9]\.\s/
 syn match rstURL /\(file\|ftp\|http\|https\|mailto\):[-./[:alnum:]_~@:#%?!=+,]\+/
-hi rstURL             ctermfg=081
-hi rstEmphasis        ctermfg=223 ctermbg=none cterm=none
-hi rstStrongEmphasis  ctermfg=217
+hi  rstURL             ctermfg=081
+hi  rstEmphasis        ctermfg=223 ctermbg=none cterm=none
+hi  rstStrongEmphasis  ctermfg=217
 hi link rstInlineLiteral   rstLiteralBlock
 hi link rstBulletedList Keyword
 hi link rstEnumeratedList Keyword
@@ -20,11 +20,11 @@ hi magicLine          ctermfg=245
 " embed todo syntax for embedded blocks, hack follows:
 let b:current_syntax = ''
 unlet b:current_syntax
-syntax include @todo syntax/todo.vim
+syn include @todo syntax/todo.vim
 let b:current_syntax = ''
 unlet b:current_syntax
 " rst's definition of literal blocks stops at new line, instead use a line with '..'
-syntax region todoEmbedded matchgroup=Snip start=/^.. code:: todo\s*\n/ end=/^..$/ contains=@todo keepend
+syn region todoEmbedded matchgroup=Snip start=/^.. code:: todo\s*\n/ end=/^..$/ contains=@todo keepend
 
 let b:current_syntax = 'rst'
 
