@@ -8,12 +8,6 @@
 syn region pmdEmphasis matchgroup=pmdDelimiter start=/\z\(_\|\*\)/ end=/\z1/ keepend oneline
 syn region pmdStrong matchgroup=pmdDelimiter start=/\z\(__\|\*\*\)/ end=/\z1/ keepend oneline
 
-" [link](URL) | [link][id] | [link][]
-syn region pmdFootnotes matchgroup=pmdDelimiter start="\[^"    end="\]"
-syn region pmdID matchgroup=pmdDelimiter        start="\["    end="\]" contained oneline
-syn region pmdURL matchgroup=pmdDelimiter       start="("     end=")"  contained oneline
-syn region pmdLink matchgroup=pmdDelimiter      start="\\\@<!\[" end="\]\ze\s*[[(]" contains=@Spell nextgroup=pmdURL,pmdID skipwhite oneline
-syn match  pmdInlineURL /\(file\|ftp\|http\|https\|mailto\):[-./[:alnum:]_~&@:#%?!=+,]\+/
 
 " Link definitions: [id]: URL (Optional Title)
 syn region pmdLinkDef matchgroup=pmdDelimiter   start="^ \{,3}\zs\[" end="]:" oneline nextgroup=pmdLinkDefTarget skipwhite
@@ -31,7 +25,6 @@ syn region pmdCode         start=/\s*``[^`]*/              end=/[^`]*``\s*/
 syn region pmdCode         start=/^```\s*[0-9A-Za-z_-]*\s*$/          end=/^```\s*$/
 syn region pmdCode         start="<pre[^>]*>"              end="</pre>"
 syn region pmdCode         start="<code[^>]*>"             end="</code>"
-syn region pmdFootnote     start="\[^"                     end="\]"
 syn match  pmdCode         /^\s*\n\(\(\s\{8,}[^ ]\|\t\t\+[^\t]\).*\n\)\+/
 syn match  pmdIndentCode   /^\s*\n\(\(\s\{4,}[^ ]\|\t\+[^\t]\).*\n\)\+/ contained
 syn match  pmdListItem     "^\s*[-*+]\s\+"
@@ -42,6 +35,14 @@ syn match  pmdRule         /^\s*-\s\{0,1}-\s\{0,1}-$/
 syn match  pmdRule         /^\s*_\s\{0,1}_\s\{0,1}_$/
 syn match  pmdRule         /^\s*-\{3,}$/
 syn match  pmdRule         /^\s*\*\{3,5}$/
+
+" [link](URL) | [link][id] | [link][]
+syn match   pmdHyperlinkDef /\[[^\] \^][^\]]*\]\(([^)]\+)\|\[[^\]]*\]\)/ contains=pmdID,pmdURL,pmdLink
+syn region  pmdID matchgroup=pmdDelimiter   start="\[^"    end="\]" contained
+syn region  pmdURL matchgroup=pmdDelimiter  start="("     end=")"  contained
+syn region  pmdLink matchgroup=pmdDelimiter start="\[[^\] \^]"rs=s+1 end="\]" contained
+
+syn match  pmdInlineURL /\(file\|ftp\|http\|https\|mailto\):[-./[:alnum:]_~&@:#%?!=+,]\+/
 
 " Headings
 syn region pmdH1       start="^\s*#"                   end="\($\|#\+\)" contains=@Spell
@@ -62,19 +63,17 @@ hi link pmdMath       String
 hi link pmdMathCtrl   Comment
 hi link pmdMathSymbol Keyword
 
-syn cluster pmdNonListItem contains=pmdEmphasis,pmdStrong,pmdMath,pmdFootnotes,pmdID,pmdInlineURL,pmdURL,pmdLink,pmdLinkDef,pmdLineBreak,pmdBlockquote,pmdCode,pmdIndentCode,pmdListItem,pmdRule,pmdH1,pmdH2,pmdH3,pmdH4,pmdH5,pmdH6
+syn cluster pmdNonListItem contains=pmdHyperlinkDef,pmdEmphasis,pmdStrong,pmdMath,pmdInlineURL,pmdLinkDef,pmdLineBreak,pmdBlockquote,pmdCode,pmdIndentCode,pmdListItem,pmdRule,pmdH1,pmdH2,pmdH3,pmdH4,pmdH5,pmdH6
 
 "highlighting for Markdown groups
 hi link pmdString         String
 hi link pmdCode           String
 hi link pmdIndentCode     String
-hi link pmdFootnote       Comment
 hi link pmdBlockquote     Comment
 hi link pmdLineContinue   Comment
-hi link pmdListItem       Identifier
+hi link pmdListItem       Keyword
 hi link pmdRule           Identifier
 hi link pmdLineBreak      Todo
-hi link pmdFootnotes      pmdLink
 hi link pmdLink           String
 hi link pmdInlineURL      pmdURL
 hi link pmdID             Identifier
