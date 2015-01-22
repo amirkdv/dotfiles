@@ -18,6 +18,10 @@ add_identity(){
   fi
 }
 
+# FIXME gnome-keyring bug (6 years old):
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=472477
+# https://bugs.launchpad.net/ubuntu/+source/openssh/+bug/505278
+# https://bugs.launchpad.net/ubuntu/+source/gnome-keyring/+bug/1271591
 remove_identity(){
   if env | grep -q SSH_AGENT_PID; then
     ssh-add -D
