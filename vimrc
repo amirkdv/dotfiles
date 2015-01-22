@@ -98,5 +98,6 @@ command Rc r ! cat -
 noremap <leader>d "_d
 " Write as root if file opened as readonly
 command F %!sudo tee > /dev/null %
-" print the highlight rule that applies to current word
-command C echo synIDattr(synID(line("."), col("."), 1), "name")
+" Show syntax highlighting groups for word under cursor
+" taken from: http://stackoverflow.com/a/7893500
+command C echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
