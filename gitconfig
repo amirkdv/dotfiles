@@ -2,11 +2,11 @@
   ui = true
 [user]
   name = Amir Kadivar
-  email= amir@amirkdv.ca
+  email = amir@amirkdv.ca
 [push]
   default = upstream
 [color "status"]
-  added   = green
+  added = green
   changed = yellow
   untracked = cyan
 [alias]
@@ -14,7 +14,10 @@
   l  = log --pretty=oneline
   st = status
   co = checkout
+  b  = branch -a
   aa = add --all
   ap = add --patch
-  ca = commit --amend
   ci = commit -v
+  d  = diff
+  dc = diff --cached
+  di = diff --no-index
