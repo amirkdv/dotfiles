@@ -55,15 +55,15 @@ syn match  pmdH1       /^.\+\n=\+$/ contains=@Spell
 syn match  pmdH2       /^.\+\n-\+$/ contains=@Spell
 
 " Math stuff
-syn region  pmdMath matchgroup=Delimiter start=/\$[^ ]/rs=s+1 skip=/\\\$/ end=/\$/re=e-1 contains=@pmdMathItems
-syn match   pmdMathSymbol /\\[a-z]\+/ contained
+syn region  pmdMath matchgroup=pmdDelimiter start=/\z\(\$\+\)[^ ]/rs=e-1 skip=/\\\$/ end=/\z1/re=s contains=@pmdMathItems
+syn match   pmdMathSymbol /\\[a-zA-Z]\+/ contained
 syn match   pmdMathCtrl /[_\^{}]/ contained
 syn cluster pmdMathItems contains=pmdMathSymbol,pmdMathCtrl
-hi link pmdMath       String
-hi link pmdMathCtrl   Comment
-hi link pmdMathSymbol Keyword
+hi link pmdMath       Normal
+hi link pmdMathCtrl   Title
+hi link pmdMathSymbol String
 
-syn cluster pmdNonListItem contains=pmdHyperlinkDef,pmdEmphasis,pmdStrong,pmdMath,pmdInlineURL,pmdLinkDef,pmdLineBreak,pmdBlockquote,pmdCode,pmdIndentCode,pmdListItem,pmdRule,pmdH1,pmdH2,pmdH3,pmdH4,pmdH5,pmdH6
+syn cluster pmdNonListItem contains=pmdHyperlinkDef,pmdEmphasis,pmdStrong,pmdMath,pmdInlineURL,pmdLinkDef,pmdLineBreak,pmdBlockquote,pmdCode,pmdListItem,pmdRule,pmdH1,pmdH2,pmdH3,pmdH4,pmdH5,pmdH6
 
 "highlighting for Markdown groups
 hi link pmdString         String
@@ -72,16 +72,16 @@ hi link pmdIndentCode     String
 hi link pmdBlockquote     Comment
 hi link pmdLineContinue   Comment
 hi link pmdListItem       Keyword
-hi link pmdRule           Identifier
+hi link pmdRule           Keyword
 hi link pmdLineBreak      Todo
-hi link pmdLink           String
+hi link pmdLink           Keyword
 hi link pmdInlineURL      pmdURL
 hi link pmdID             Identifier
 hi link pmdLinkDef        pmdID
 hi link pmdLinkDefTarget  pmdURL
 hi link pmdLinkTitle      pmdString
 hi link pmdDelimiter      Delimiter
-hi link pmdH1             Title
+hi link pmdH1             Keyword
 hi link pmdH2             pmdH1
 hi link pmdH3             pmdH2
 hi link pmdH4             pmdH3
@@ -90,10 +90,10 @@ hi link pmdH6             pmdH5
 hi link pmdHead           PreProc
 hi link pmdTitle          Title
 hi link pmdString         String
-hi link pmdEmphasis       Title
-hi link pmdStrong         Title
+hi link pmdEmphasis       Keyword
+hi link pmdStrong         pmdEmphasis
 hi link pmdLink           String
-hi link pmdURL            Comment
+hi link pmdURL            Keyword
 
 set fo=rnt
 setlocal comments=b:*,b:+,b:-
