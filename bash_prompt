@@ -22,15 +22,12 @@ setup_prompt(){
       ;;
   esac
   declare -r user=$(whoami)
-  declare -r git_branch=" \$(which git >/dev/null && git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/(\1)/')"
-  # if current machine is not mine show the current directory in purple
-  declare -r pwd_color="$( [[ $fqdn =~ mars|jupiter|neptune|grumpy ]] && echo ${blue} || echo ${purple} )"
-  # if user is root show user in red
-  declare -r user_color="$( [[ $user == 'root' ]] && echo ${red} || echo ${white})"
+  declare -r user_color="$( [[ $user == 'root' ]] && echo ${red} || :)"
+  declare -r git_branch=" (\$(which git >/dev/null && git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/\1/'))"
   # show [-]/[+] for previous command's exit code, note that
   # exit_code must be re-evaluated everytime PS1 is evaluated,
   # escape $ to avoid subshells' immediate evaluation.
   declare -r exit_code="\$(c=\$?; [[ \$c == 0 ]] && echo \"${green}[+]\" || echo \"${red}[-]\")"
 
-  export PS1="${exit_code}${white}${user_color}${user}${white}@${fqdn}:${pwd_color}\w${green}${git_branch}${pwd_color} > ${ps_clear}"
+  export PS1="${exit_code}${ps_clear}${user_color}${user}${ps_clear}@${fqdn}:\w${green}${git_branch}${pwd_color} > ${ps_clear}"
 }

@@ -11,7 +11,8 @@
   untracked = cyan
 [alias]
   ls = ls-files
-  l  = log --pretty=oneline
+  l  = log --pretty=oneline --decorate
+  lp = log --patch --decorate
   st = status
   co = checkout
   b  = branch -a

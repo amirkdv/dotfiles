@@ -77,7 +77,7 @@ main(){
         fi
       fi
       log 'installing dotfiles'
-      rcup -f -d "$current_dir" -x install -x README.md 2>&1 | sed 's/^/  ---> /' >&2
+      rcup -f -q -d "$current_dir" -x install -x README.md
       return $?
       ;;
     pubkey)
