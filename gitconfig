@@ -13,6 +13,7 @@
   ls = ls-files
   l  = log --pretty=oneline --decorate
   lp = log --patch --decorate
+  sh = show --name-status
   st = status
   co = checkout
   b  = branch -a
