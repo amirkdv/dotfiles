@@ -1,0 +1,21 @@
+"*":
+  "exception-reporting":
+    userId: "3aa17ac0-4ea1-f0f3-100b-2904bc222de4"
+  welcome:
+    showOnStartup: false
+  core:
+    themes: [
+      "atom-dark-ui"
+      "one-dark-syntax"
+    ]
+    audioBeep: false
+  editor:
+    invisibles: {}
+    softWrap: true
+    zoomFontWhenCtrlScrolling: false
+    showIndentGuide: true
+    fontFamily: "Inconsolata"
+    fontSize: 16
+    preferredLineLength: 80
+  build:
+    buildOnSave: false
