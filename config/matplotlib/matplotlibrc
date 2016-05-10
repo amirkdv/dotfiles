@@ -128,7 +128,7 @@ backend      : TkAgg
 #
 #font.family         : sans-serif
 font.family         : CMU Serif
-#font.style          : normal
+font.style          : italic
 #font.variant        : normal
 #font.weight         : medium
 #font.stretch        : normal

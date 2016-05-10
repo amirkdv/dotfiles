@@ -15,14 +15,24 @@ colorscheme molokai     " has hi Normal ctermbg=234; for equivalent
                         " cf. https://gist.github.com/MicahElliott/719710
 set background=dark     " is only required for molokai in terminal
 set t_md=               " get rid of bold font altogether!
-"highlight ColumnColor   ctermbg=234
+set cursorline
+
+highlight ColorColumn ctermbg=234
 highlight CursorLine    cterm=NONE  ctermbg=234
-"highlight CursorColumn  cterm=NONE  ctermbg=233
-highlight StatusLine    ctermbg=94  ctermfg=232
-highlight LineNr        ctermfg=94  ctermbg=233 " line number column color
-"highlight Visual        ctermbg=239
+highlight StatusLine    ctermbg=194 ctermfg=233
+highlight LineNr        ctermfg=194 ctermbg=233 " line number column color
+highlight Visual        ctermbg=234
 highlight TODO          ctermbg=226 ctermfg=233
 highlight DEBUG         ctermbg=047 ctermfg=233
+
+highlight TabLine     ctermfg=194 ctermbg=234 cterm=none
+highlight TabLineSel  ctermfg=234 ctermbg=192 cterm=none
+highlight TabLineFill ctermfg=234 ctermbg=234 cterm=none
+
+set foldcolumn=2
+highlight! link FoldColumn Normal
+set showtabline=2 " Always show the tabline even if there's only one
+
 set number
 set textwidth=80
 set colorcolumn=81      " needed by highlight ColumnColor

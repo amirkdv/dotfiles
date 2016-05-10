@@ -9,6 +9,9 @@
       "one-dark-syntax"
     ]
     audioBeep: false
+    disabledPackages: [
+      "language-gfm"
+    ]
   editor:
     invisibles: {}
     softWrap: true
