@@ -44,7 +44,7 @@ case $OSTYPE in
 esac
 [[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
 [[ -f /etc/bash_completion ]] && ! shopt -oq posix && source /etc/bash_completion
-[[ -f ~/.bash_ssh_agent && -x /usr/bin/ssh-agent ]] && source ~/.bash_ssh_agent && start_agent && add_identity
+#[[ -f ~/.bash_ssh_agent && -x /usr/bin/ssh-agent ]] && source ~/.bash_ssh_agent && start_agent && add_identity
 [[ -f ~/.bash_prompt ]] && source ~/.bash_prompt && setup_prompt
 [[ -f ~/.bash_locale ]] && source ~/.bash_locale && setup_locale "$locale_name"
 
