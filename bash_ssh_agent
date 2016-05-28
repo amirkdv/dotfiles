@@ -29,3 +29,5 @@ remove_identity(){
     unset SSH_AUTH_SOCK
   fi
 }
+
+[[ -x /usr/bin/ssh-agent ]] && start_agent && add_identity

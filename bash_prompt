@@ -31,3 +31,5 @@ setup_prompt(){
 
   export PS1="${exit_code}${ps_clear}${user_color}${user}${ps_clear}@${fqdn}:\w${green}${git_branch}${pwd_color} > ${ps_clear}"
 }
+
+setup_prompt

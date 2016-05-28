@@ -28,28 +28,25 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-GOROOT=/usr/local/go
-if [[ -d $GOROOT ]]; then
-  export GOROOT
-  export PATH="$GOROOT/bin:$PATH"
-fi
-
-case $OSTYPE in
-  darwin*)
-    declare locale_name=en_CA.UTF-8
-    ;;
-  linux-gnu)
-    declare locale_name=en_CA.utf8
-    ;;
-esac
 [[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
 [[ -f /etc/bash_completion ]] && ! shopt -oq posix && source /etc/bash_completion
-#[[ -f ~/.bash_ssh_agent && -x /usr/bin/ssh-agent ]] && source ~/.bash_ssh_agent && start_agent && add_identity
-[[ -f ~/.bash_prompt ]] && source ~/.bash_prompt && setup_prompt
-[[ -f ~/.bash_locale ]] && source ~/.bash_locale && setup_locale "$locale_name"
+#[[ -f ~/.bash_ssh_agent ]] && source ~/.bash_ssh_agent
+[[ -f ~/.bash_prompt ]] && source ~/.bash_prompt
+[[ -f ~/.bash_locale ]] && source ~/.bash_locale
 
 # add /usr/sbin and /usr/local/bin to PATH on Mac OS X for homebrew.
 [[ "$OSTYPE" == "darwin"* ]] && PATH=$PATH:/usr/sbin:/usr/local/sbin || :
+
 # start tmux automatically, force 256 colors
 which tmux >/dev/null && [[ -z $TMUX ]] && tmux
 export EDITOR=vim
+
+# set up npm so that global installs land in the homedir:
+if which npm >/dev/null; then
+  export NPM_PACKAGES="$HOME/.npm-packages"
+  export PATH="$NPM_PACKAGES/bin:$PATH"
+fi
+
+# Unset manpath so we can inherit from /etc/manpath via the `manpath` command
+unset MANPATH # delete if you already modified MANPATH elsewhere in your config
+export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"

@@ -1,6 +1,13 @@
 #!/bin/bash
 setup_locale(){
-  declare -r locale="$1"
+  case $OSTYPE in
+    darwin*)
+      declare -r locale=en_CA.UTF-8
+      ;;
+    linux-gnu)
+      declare -r locale=en_CA.utf8
+      ;;
+  esac
   declare -r no_locale_msg=$( cat <<EOF
 \n
 This system does not have $locale installed.
@@ -13,6 +20,7 @@ source ~/.bash_locale && setup_locale $locale
 \n
 EOF
 )
+
   if locale -a | grep -q $locale ; then
     export LC_ALL="$locale"
     export LANG="$locale"
@@ -21,3 +29,5 @@ EOF
     printf "$no_locale_msg"
   fi
 }
+
+setup_locale
