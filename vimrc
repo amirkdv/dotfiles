@@ -100,6 +100,7 @@ set expandtab
 " Text Handling
 "----------------------------------------------------------------------
 " yank/paste to/from clipboard
+" NOTE this needs +clipboard which doesn't come with default vim (install vim-gtk)
 noremap <leader>y "+y
 noremap <leader>p "+p
 " Paste when clipboard forwarding is not working:
