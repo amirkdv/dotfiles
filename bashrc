@@ -47,6 +47,10 @@ if which npm >/dev/null; then
   export PATH="$NPM_PACKAGES/bin:$PATH"
 fi
 
+if which pip > /dev/null; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
 # Unset manpath so we can inherit from /etc/manpath via the `manpath` command
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
 export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
