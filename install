@@ -5,6 +5,7 @@ set -u
 # e.g. in a docker build.
 USER=$( whoami )
 HOME=$( eval echo ~$USER )
+RCUP=rcup
 
 [ $USER = root ] && sudo= || sudo=sudo
 current_dir="$(dirname "$0")"
@@ -28,7 +29,7 @@ install_rcm() {
       brew install rcm
       ;;
     linux-gnu)
-      declare -r deb_src='http://thoughtbot.github.io/rcm/debs/rcm_1.2.1-2_all.deb'
+      declare -r deb_src='https://thoughtbot.github.io/rcm/debs/rcm_1.3.0-1_all.deb'
       declare -r deb_dst=$HOME/rcm.deb
       wget -qO "$deb_dst" "$deb_src" && $sudo dpkg -i "$deb_dst" >/dev/null 2>&1
       ;;
@@ -69,15 +70,11 @@ main(){
   case "$1" in
     dotfiles)
       if ! which rcup >/dev/null; then
-        if privileged; then
-          install_rcm || return 1
-        else
-          log 'Installing rcm requires root privileges'
-          return 1
-        fi
+        RCUP=$current_dir/rcup.sh
+        log 'rcm not installed; using rcup.sh instead'
       fi
       log 'installing dotfiles'
-      rcup -f -q -d "$current_dir" -x install -x README.md
+      $RCUP -f -q -d "$current_dir" -x install -x README.md
       return $?
       ;;
     pubkey)
