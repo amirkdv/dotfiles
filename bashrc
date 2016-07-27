@@ -38,7 +38,7 @@ fi
 [[ "$OSTYPE" == "darwin"* ]] && PATH=$PATH:/usr/sbin:/usr/local/sbin || :
 
 # start tmux automatically, force 256 colors
-which tmux >/dev/null && [[ -z $TMUX ]] && tmux
+# which tmux >/dev/null && [[ -z $TMUX ]] && tmux
 export EDITOR=vim
 
 # set up npm so that global installs land in the homedir:
