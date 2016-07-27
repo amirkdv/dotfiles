@@ -5,10 +5,16 @@ set -u
 # e.g. in a docker build.
 USER=$( whoami )
 HOME=$( eval echo ~$USER )
-RCUP=rcup
-
+CUR_DIR="$(dirname "$0")"
 [ $USER = root ] && sudo= || sudo=sudo
-current_dir="$(dirname "$0")"
+if which rcup >/dev/null; then
+  RCUP=rcup
+else
+  log 'rcm not installed; using rcup.sh instead'
+  RCUP=$CUR_DIR/rcup.sh
+fi
+RCUP_OPTS="-f -v -d '$CUR_DIR' -x install -x README.md -x rcup.sh"
+
 
 log(){ printf -- "---> $1\n" >&2; }
 
@@ -69,12 +75,18 @@ install_pubkey(){
 main(){
   case "$1" in
     dotfiles)
-      if ! which rcup >/dev/null; then
-        RCUP=$current_dir/rcup.sh
-        log 'rcm not installed; using rcup.sh instead'
-      fi
       log 'installing dotfiles'
-      $RCUP -f -q -d "$current_dir" -x install -x README.md
+      $RCUP $RCUP_OPTS
+      return $?
+      ;;
+    rcup.sh)
+      log 'regenerating rcup.sh'
+      if [ $RCUP != rcup ]; then
+        log 'rcm needs to be installed to generate standalone scripts'
+        return 1
+      fi
+      # for some reason fails unless it's in bash -c!
+      bash -c "rcup $RCUP_OPTS -g" > $1
       return $?
       ;;
     pubkey)
@@ -97,7 +109,7 @@ main(){
   esac
 }
 
-[ $# = 0 ] && log 'specify what to install: dotfiles|pubkey|locale' && exit 1
+[ $# = 0 ] && log 'specify what to install: dotfiles|pubkey|locale|rcup.sh' && exit 1
 code=0
 for i in "$@"; do
   main "$i"
