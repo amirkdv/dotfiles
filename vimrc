@@ -42,8 +42,7 @@ set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V%)
 set showmatch           " highlight matching braces
 set modeline            " respect # vi: [command] :
 set modelines=2
-autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
-autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|TODO\|FIXME\|XXX\|BUG\|HACK\)')
 "----------------------------------------------------------------------
 " Navigation
 "----------------------------------------------------------------------
