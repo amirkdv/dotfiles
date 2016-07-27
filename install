@@ -85,8 +85,10 @@ main(){
         log 'rcm needs to be installed to generate standalone scripts'
         return 1
       fi
-      # for some reason fails unless it's in bash -c!
-      bash -c "rcup $RCUP_OPTS -g" > $1
+      # 1. for some reason fails unless it's in bash -c!
+      # 2. don't evaluate HOME here, let it be evaluated where we run rcup.sh
+      # 3. don't hardcode the PWD here, let it remain relative
+      HOME='$HOME' bash -c "rcup $RCUP_OPTS -g" | sed "s|$(readlink -f $CUR_DIR)/||" > $1
       return $?
       ;;
     pubkey)
