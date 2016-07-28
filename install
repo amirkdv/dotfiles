@@ -15,7 +15,7 @@ if which rcup >/dev/null; then
   RCUP=rcup
 else
   log 'rcm not installed; using rcup.sh instead'
-  RCUP="CUR_DIR="$CUR_DIR_ABS" $CUR_DIR/rcup.sh"
+  RCUP=$CUR_DIR/rcup.sh
 fi
 RCUP_OPTS="-f -v -d '$CUR_DIR' -x install -x README.md -x rcup.sh"
 
@@ -77,7 +77,8 @@ main(){
   case "$1" in
     dotfiles)
       log 'installing dotfiles'
-      $RCUP $RCUP_OPTS
+      # the environment variable is needed when running rcup.sh
+      CUR_DIR="$CUR_DIR_ABS" $RCUP $RCUP_OPTS
       return $?
       ;;
     rcup.sh)
