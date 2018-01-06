@@ -38,7 +38,7 @@ fi
 [[ "$OSTYPE" == "darwin"* ]] && PATH=$PATH:/usr/sbin:/usr/local/sbin || :
 
 # start tmux automatically, force 256 colors
-# which tmux >/dev/null && [[ -z $TMUX ]] && tmux
+which tmux >/dev/null && [[ -z $TMUX ]] && tmux
 export EDITOR=vim
 
 # set up npm so that global installs land in the homedir:
@@ -58,3 +58,10 @@ export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 export HISTSIZE=-1
 export HISTFILESIZE=-1
 export HISTTIMEFORMAT="%d/%m/%y %T "
+lvim() { cat -n "$1" | less; }
+
+PATH="/home/amir/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/amir/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/amir/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/amir/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/amir/perl5"; export PERL_MM_OPT;
