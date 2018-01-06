@@ -21,6 +21,7 @@ alias tree="tree -a -C"
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+alias opn='xdg-open 2>/dev/null'
 
 # use 256 colors with tmux
 alias tmux='tmux -2'
