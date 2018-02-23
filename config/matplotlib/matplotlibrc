@@ -127,8 +127,8 @@ backend      : TkAgg
 # 12pt is the standard value.
 #
 #font.family         : sans-serif
-font.family         : CMU Serif
-font.style          : italic
+font.family         : TeX Gyre Schola
+#font.style          : italic
 #font.variant        : normal
 #font.weight         : medium
 #font.stretch        : normal

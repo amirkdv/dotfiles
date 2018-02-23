@@ -56,6 +56,7 @@ syn match  pmdH2       /^.\+\n-\+$/ contains=@Spell
 
 " Math stuff
 syn region  pmdMath matchgroup=pmdDelimiter start=/\z\(\$\+\)[^ ]/rs=e-1 skip=/\\\$/ end=/\z1/re=s contains=@pmdMathItems
+syn match   pmdRule         /\(\\begin\|\\end\|\\label\|\\ref\)/
 syn match   pmdMathSymbol /\\[a-zA-Z]\+/ contained
 syn match   pmdMathCtrl /[_\^{}]/ contained
 syn cluster pmdMathItems contains=pmdMathSymbol,pmdMathCtrl

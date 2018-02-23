@@ -111,3 +111,6 @@ command F %!sudo tee > /dev/null %
 " Show syntax highlighting groups for word under cursor
 " taken from: http://stackoverflow.com/a/7893500
 command C echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+
+" when commenting out add a space after comment symbol
+let NERDSpaceDelims=1
