@@ -55,10 +55,9 @@ fi
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
 export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
-export HISTSIZE=-1
-export HISTFILESIZE=-1
+export HISTSIZE=
+export HISTFILESIZE=
 export HISTTIMEFORMAT="%d/%m/%y %T "
-lvim() { cat -n "$1" | less; }
 
 PATH="/home/amir/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/amir/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
