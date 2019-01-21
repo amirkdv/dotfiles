@@ -1,1 +1,1 @@
-au BufRead,BufNewFile Snakefile* setlocal filetype=dockerfile
+au BufRead,BufNewFile Snakefile* setlocal filetype=snakemake
