@@ -12,6 +12,7 @@
 [alias]
   ls = ls-files
   l  = log --pretty=oneline --decorate
+  lf = log --follow
   lp = log --patch --decorate
   sh = show --name-status
   st = status -uno
