@@ -1,7 +1,7 @@
  "Vim syntax file
  " Language:   Snakemake (extended from python.vim)
  " Maintainer: Jay Hesselberth (jay.hesselberth@gmail.com)
- " Last Change:    2015 Jul 1 
+ " Last Change:    2015 Jul 1
  "
  " Usage
  "
@@ -44,7 +44,7 @@
  syn keyword pythonStatement   include workdir onsuccess onerror
  syn keyword pythonStatement   ruleorder localrules configfile
  syn keyword pythonStatement   touch protected temp
- syn keyword pythonStatement   input output params message threads resources
+ syn keyword pythonStatement   input output params message threads resources wildcard_constraints
  syn keyword pythonStatement   version run shell benchmark snakefile log
  syn keyword pythonStatement   rule subworkflow nextgroup=pythonFunction skipwhite
 

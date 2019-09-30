@@ -1,3 +1,5 @@
+set backupcopy=yes " so docker mounting of single files doesn't break
+
 filetype plugin on
 syntax on
 scriptencoding utf-8

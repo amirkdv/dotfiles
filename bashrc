@@ -41,6 +41,15 @@ fi
 which tmux >/dev/null && [[ -z $TMUX ]] && tmux
 export EDITOR=vim
 
+vim_save() {
+    find . -regex '.*swp' | sed 's|\.\([^\/]*\)\.swp|\1|' > open_vim_files.txt
+}
+
+vim_load() {
+    vim -p $(cat open_vim_files.txt)
+}
+
+
 # set up npm so that global installs land in the homedir:
 if which npm >/dev/null; then
   export NPM_PACKAGES="$HOME/.npm-packages"

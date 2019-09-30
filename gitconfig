@@ -18,6 +18,7 @@
   st = status -uno
   co = checkout
   b  = branch -a
+  bm = branch --merged # lists "merged" branches -- **CAUTION**: includes master
   aa = add --all
   ap = add --patch
   ci = commit -v
@@ -25,4 +26,5 @@
   dc = diff --cached
   di = diff --no-index
   r  = remote -v
+  rp = remote prune # usage: git rp origin
   f  = fetch
