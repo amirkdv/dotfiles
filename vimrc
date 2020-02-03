@@ -12,10 +12,12 @@ let mapleader=";"
 " Use the following chart for picking 256 colors
 " http://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
 set t_Co=256            " Enable 256 color
-colorscheme molokai     " has hi Normal ctermbg=234; for equivalent
+" colorscheme molokai     " has hi Normal ctermbg=234; for equivalent
                         " terminal background use #1c1c1c
                         " cf. https://gist.github.com/MicahElliott/719710
-set background=dark     " is only required for molokai in terminal
+" set background=dark     " is only required for molokai in terminal
+" Colorscheme set lower down now
+
 set t_md=               " get rid of bold font altogether!
 set cursorline
 
@@ -40,11 +42,13 @@ set textwidth=80
 set colorcolumn=81      " needed by highlight ColumnColor
 set laststatus=2        " always show status line
 set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V%)
-"set cursorline          " highlight the current line
 set showmatch           " highlight matching braces
 set modeline            " respect # vi: [command] :
 set modelines=2
 autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|TODO\|FIXME\|XXX\|BUG\|HACK\)')
+
+colorscheme PaperColor
+set background=light
 "----------------------------------------------------------------------
 " Navigation
 "----------------------------------------------------------------------
@@ -91,9 +95,11 @@ au WinLeave,InsertEnter * :set listchars-=trail:·
 au WinEnter,InsertLeave * :set listchars+=trail:·
 " wrap /\s\+%$// in ma `a, otherwise current line won't be the same
 " normal mode commands are executed in commands via :norm
-autocmd BufWritePre * :norm ma
-autocmd BufWritePre * :%s/\s\+$//e
-autocmd BufWritePost * :norm `a
+" NOTE comment out the following in interactive git hunk edit; removing trailing
+" spaces corrupts git patches.
+" autocmd BufWritePre * :norm ma
+" autocmd BufWritePre * :%s/\s\+$//e
+" autocmd BufWritePost * :norm `a
 " Disable vim-markdown folding
 let g:vim_markdown_folding_disabled=1
 set expandtab
