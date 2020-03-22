@@ -11,6 +11,7 @@ let mapleader=";"
 "----------------------------------------------------------------------
 " Use the following chart for picking 256 colors
 " http://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
+" FIXME the above is defunct, find another one on wikipedia or use this: https://jonasjacek.github.io/colors/
 set t_Co=256            " Enable 256 color
 " colorscheme molokai     " has hi Normal ctermbg=234; for equivalent
                         " terminal background use #1c1c1c
@@ -49,6 +50,8 @@ autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|TODO\|FIXME\|XXX\|BUG\|HAC
 
 colorscheme PaperColor
 set background=light
+" clean up (duplicated and overriden above)
+highlight TODO          ctermbg=230 ctermfg=241
 "----------------------------------------------------------------------
 " Navigation
 "----------------------------------------------------------------------
@@ -97,9 +100,9 @@ au WinEnter,InsertLeave * :set listchars+=trail:·
 " normal mode commands are executed in commands via :norm
 " NOTE comment out the following in interactive git hunk edit; removing trailing
 " spaces corrupts git patches.
-" autocmd BufWritePre * :norm ma
-" autocmd BufWritePre * :%s/\s\+$//e
-" autocmd BufWritePost * :norm `a
+autocmd BufWritePre * :norm ma
+autocmd BufWritePre * :%s/\s\+$//e
+autocmd BufWritePost * :norm `a
 " Disable vim-markdown folding
 let g:vim_markdown_folding_disabled=1
 set expandtab

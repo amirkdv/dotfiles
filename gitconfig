@@ -17,14 +17,12 @@
   sh = show --name-status
   st = status -uno
   co = checkout
-  b  = branch -a
-  bm = branch --merged # lists "merged" branches -- **CAUTION**: includes master
-  aa = add --all
+  b  = branch -vv
+  ba = branch -a -vv
   ap = add --patch
   ci = commit -v
   d  = diff
   dc = diff --cached
   di = diff --no-index
   r  = remote -v
-  rp = remote prune # usage: git rp origin
   f  = fetch
