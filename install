@@ -77,6 +77,13 @@ install_pubkey(){
 
 main(){
   case "$1" in
+    rcm)
+      log 'installing rcm; NOTE: only works on Debian-based distros'
+      wget -qO - https://apt.thoughtbot.com/thoughtbot.gpg.key | sudo apt-key add -
+      echo "deb https://apt.thoughtbot.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/thoughtbot.list
+      sudo apt-get update
+      sudo apt-get install rcm
+      ;;
     dotfiles)
       log 'installing dotfiles'
       # the environment variable is needed when running rcup.sh
