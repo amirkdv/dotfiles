@@ -12,7 +12,6 @@
 [alias]
   ls = ls-files
   l  = log --pretty=oneline --decorate
-  lf = log --pretty=oneline --decorate --follow
   lp = log --patch --decorate
   sh = show --name-status
   st = status -uno
@@ -24,5 +23,4 @@
   d  = diff
   dc = diff --cached
   di = diff --no-index
-  r  = remote -v
-  f  = fetch
+  g  = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset)\t%C(bold green)(%aI)%C(reset)%C(yellow)%d%C(reset) %s'
