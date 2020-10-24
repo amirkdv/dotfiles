@@ -49,7 +49,8 @@ set modelines=2
 autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|TODO\|FIXME\|XXX\|BUG\|HACK\)')
 
 colorscheme PaperColor
-set background=light
+" set background=light
+set background=dark
 " clean up (duplicated and overriden above)
 highlight TODO          ctermbg=230 ctermfg=241
 "----------------------------------------------------------------------

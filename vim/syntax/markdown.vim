@@ -588,7 +588,7 @@ hi link pandocCiteAnchor Operator
 hi link pandocCiteLocator Operator
 
 if g:pandoc#syntax#style#emphases == 1
-    hi pandocEmphasis gui=italic cterm=italic
+    " hi pandocEmphasis gui=italic cterm=italic " NOTE disabled by AK because text background gets black in light background
     hi pandocStrong gui=bold cterm=bold
     hi pandocStrongEmphasis gui=bold,italic cterm=bold,italic
     hi pandocStrongInEmphasis gui=bold,italic cterm=bold,italic
