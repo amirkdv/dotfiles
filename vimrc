@@ -125,7 +125,11 @@ command Rc r ! cat -
 " Map \d and \p to blackhole register d and p
 noremap <leader>d "_d
 " Write as root if file opened as readonly
-command F %!sudo tee > /dev/null %
+" command F %!sudo tee > /dev/null %
+" Search current git repo for word under cursor
+" :/ is a special path for git grep which means: search from the top level of
+" git repo not just the current subdirectory
+command G   ! git grep <cword> :/
 " Show syntax highlighting groups for word under cursor
 " taken from: http://stackoverflow.com/a/7893500
 command C echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
