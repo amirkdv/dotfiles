@@ -69,12 +69,18 @@ noremap   <C-s-PageUp> :tabm -1 <cr>
 nnoremap  <tab>   gt
 nnoremap  <s-tab> gT
 " use <leader> instead of Ctrl for splits
-noremap   <leader>v     <C-w>v
-noremap   <leader>s     <C-w>s
-map       <leader>j     <C-w>j
-map       <leader>k     <C-w>k
-map       <leader>h     <C-w>h
-map       <leader>l     <C-w>l
+" use the same short cuts "-" and "|" for H/V splitting as tmux
+" see tmux.conf
+" vertical split
+noremap   <leader>\|     <C-w>v
+" horizontal split
+noremap   <leader>-     <C-w>s
+" split navigation
+noremap   <leader>j     <C-w>j
+noremap   <leader>k     <C-w>k
+noremap   <leader>h     <C-w>h
+noremap   <leader>l     <C-w>l
+
 "----------------------------------------------------------------------
 " Search
 "----------------------------------------------------------------------
