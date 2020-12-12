@@ -29,7 +29,7 @@ setup_prompt(){
   # escape $ to avoid subshells' immediate evaluation.
   declare -r exit_code="\$(c=\$?; [[ \$c == 0 ]] && echo \"${green}[+]\" || echo \"${red}[-]\")"
 
-  export PS1="${exit_code}${ps_clear}${user_color}\u${ps_clear}@${fqdn}:\w${green}${git_branch}${pwd_color} > ${ps_clear}"
+  export PS1="${exit_code}${ps_clear}${user_color}\u${ps_clear}@${fqdn:0:20}...:\w${green}${git_branch}${pwd_color} > ${ps_clear}"
 }
 
 setup_prompt
