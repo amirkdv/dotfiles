@@ -43,6 +43,7 @@ export EDITOR=vim
 
 vim_save() {
     find . -regex '.*swp' | sed 's|\.\([^\/]*\)\.swp|\1|' > open_vim_files.txt
+    find . -regex '.*swp' | xargs rm
 }
 
 vim_load() {
