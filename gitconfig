@@ -21,6 +21,7 @@
   ap = add --patch
   ci = commit -v
   d  = diff
+  dn = diff --name-only
   dc = diff --cached
   di = diff --no-index
   g  = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset)\t%C(bold green)(%aI)%C(reset)%C(yellow)%d%C(reset) %s'
