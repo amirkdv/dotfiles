@@ -76,3 +76,6 @@ PERL_MB_OPT="--install_base \"/home/amir/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/amir/perl5"; export PERL_MM_OPT;
 
 export TZ=America/Toronto
+
+export GOPATH=~/.go
+export PATH="$GOPATH/bin:$PATH"
