@@ -120,6 +120,46 @@ set expandtab
 " NOTE this needs +clipboard which doesn't come with default vim (install vim-gtk)
 noremap <leader>y "+y
 noremap <leader>p "+p
+
+function RenderMarkdownUrl(url)
+  " Given a url replaces the word under cursor with a reference style markdown
+  " link and adds the link itself to the following line. For example, assuming
+  " the current line is
+  "
+  "   See this thread describing how to ...
+  "              ^
+  "              `---- cursor
+  "
+  " Then
+  "
+  "   :call RenderMarkdownUrl("https://stackoverflow.com/a/3213800/6480912")
+  "
+  " Yields:
+  "   See this [thread][1609129986] describing how to ...
+  "
+  "   [1609129986]: https://stackoverflow.com/a/3213800/6480912
+  "
+  " where the hyperlink id is the current Unix timestamp.
+  let word = expand('<cword>')
+  let id_ = strftime("%s")
+  let mark = "U"
+  " mark current position so we can jump back to it in the end
+  exe "normal! m" . mark
+  exe "normal! diw"
+  " replace word under, e.g. 'thread', with '[thread][1609129986]'
+  let md = "[" . word . "][" . id_ . "]"
+  exe "normal! i" . md . "\<Esc>"
+  " define the link in next line, e.g. '[1609129986]: https...'
+  let li = "[" . id_ . "]: " . a:url
+  exe "normal! o\<cr>" . li . " \<Esc>"
+  " jump back to original position
+  exe "normal! `" . mark
+endfunction
+
+" Wrap function with an easy to use command, e.g.
+" :Ru https://stackoverflow.com/a/3213800/6480912
+command -nargs=1 Ru call RenderMarkdownUrl(<f-args>)
+
 " Paste when clipboard forwarding is not working:
 command Rc r ! cat -
 " Map \d and \p to blackhole register d and p
