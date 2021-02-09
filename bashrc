@@ -30,15 +30,18 @@ fi
 
 [[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
 [[ -f /etc/bash_completion ]] && ! shopt -oq posix && source /etc/bash_completion
-#[[ -f ~/.bash_ssh_agent ]] && source ~/.bash_ssh_agent
 [[ -f ~/.bash_prompt ]] && source ~/.bash_prompt
 [[ -f ~/.bash_locale ]] && source ~/.bash_locale
 
+# FIXME presumably defunct, figure out what the way is
+# [[ -f ~/.bash_ssh_agent ]] && source ~/.bash_ssh_agent
+
 # add /usr/sbin and /usr/local/bin to PATH on Mac OS X for homebrew.
-[[ "$OSTYPE" == "darwin"* ]] && PATH=$PATH:/usr/sbin:/usr/local/sbin || :
+# [[ "$OSTYPE" == "darwin"* ]] && PATH=$PATH:/usr/sbin:/usr/local/sbin || :
 
 # start tmux automatically, force 256 colors
 which tmux >/dev/null && [[ -z $TMUX ]] && tmux
+
 export EDITOR=vim
 
 vim_save() {
@@ -52,30 +55,30 @@ vim_load() {
 
 
 # set up npm so that global installs land in the homedir:
-if which npm >/dev/null; then
-  export NPM_PACKAGES="$HOME/.npm-packages"
-  export PATH="$NPM_PACKAGES/bin:$PATH"
-fi
+# if which npm >/dev/null; then
+  # export NPM_PACKAGES="$HOME/.npm-packages"
+  # export PATH="$NPM_PACKAGES/bin:$PATH"
+# fi
 
-if which pip > /dev/null; then
-  export PATH="$HOME/.local/bin:$PATH"
-fi
+# if which pip > /dev/null; then
+  # export PATH="$HOME/.local/bin:$PATH"
+# fi
 
 # Unset manpath so we can inherit from /etc/manpath via the `manpath` command
-unset MANPATH # delete if you already modified MANPATH elsewhere in your config
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+# unset MANPATH # delete if you already modified MANPATH elsewhere in your config
+# export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
-export HISTSIZE=
-export HISTFILESIZE=
-export HISTTIMEFORMAT="%d/%m/%y %T "
+# export HISTSIZE=
+# export HISTFILESIZE=
+# export HISTTIMEFORMAT="%d/%m/%y %T "
 
-PATH="/home/amir/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/amir/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/amir/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/amir/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/amir/perl5"; export PERL_MM_OPT;
+# PATH="/home/amir/perl5/bin${PATH:+:${PATH}}"; export PATH;
+# PERL5LIB="/home/amir/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+# PERL_LOCAL_LIB_ROOT="/home/amir/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+# PERL_MB_OPT="--install_base \"/home/amir/perl5\""; export PERL_MB_OPT;
+# PERL_MM_OPT="INSTALL_BASE=/home/amir/perl5"; export PERL_MM_OPT;
 
 export TZ=America/Toronto
 
-export GOPATH=~/.go
-export PATH="$GOPATH/bin:$PATH"
+# export GOPATH=~/.go
+# export PATH="$GOPATH/bin:$PATH"

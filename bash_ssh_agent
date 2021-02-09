@@ -1,4 +1,5 @@
 #!/bin/bash
+#FIXME presumably defunct, figure out what has changed since 2014
 # start agent and set environment variables, if needed
 start_agent(){
   if env | grep -q SSH_AGENT_PID; then
