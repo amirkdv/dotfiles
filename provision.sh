@@ -24,9 +24,10 @@ sudo apt-get install -qq \
 
 # dev environment tools
 sudo apt-get install -qq \
+  tmux xclip \
+  vim-gtk \
   gcc \
   build-essential \
-  tmux \
   python3 python3-dev python3-pip \
   sqlite3 \
   graphviz libgraphviz-dev \
