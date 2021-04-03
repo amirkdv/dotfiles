@@ -5,7 +5,7 @@ set -euox pipefail
 sudo apt-get update -qq
 
 # generic tools
-sudo apt-get install -qqy \
+sudo apt-get install -qq \
   make \
   vim \
   git \
@@ -23,7 +23,7 @@ sudo apt-get install -qqy \
   tzdata
 
 # dev environment tools
-sudo apt-get install -qqy \
+sudo apt-get install -qq \
   gcc \
   build-essential \
   tmux \
