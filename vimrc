@@ -13,29 +13,12 @@ let mapleader=";"
 " http://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
 " FIXME the above is defunct, find another one on wikipedia or use this: https://jonasjacek.github.io/colors/
 set t_Co=256            " Enable 256 color
-" colorscheme molokai     " has hi Normal ctermbg=234; for equivalent
-                        " terminal background use #1c1c1c
-                        " cf. https://gist.github.com/MicahElliott/719710
-" set background=dark     " is only required for molokai in terminal
-" Colorscheme set lower down now
 
 set t_md=               " get rid of bold font altogether!
 set cursorline
 
-highlight ColorColumn ctermbg=234
-highlight CursorLine    cterm=NONE  ctermbg=234
-highlight StatusLine    ctermbg=194 ctermfg=233
-highlight LineNr        ctermfg=194 ctermbg=233 " line number column color
-highlight Visual        ctermbg=234
-highlight TODO          ctermbg=226 ctermfg=233
-highlight DEBUG         ctermbg=047 ctermfg=233
-
-highlight TabLine     ctermfg=194 ctermbg=234 cterm=none
-highlight TabLineSel  ctermfg=234 ctermbg=192 cterm=none
-highlight TabLineFill ctermfg=234 ctermbg=234 cterm=none
-
-set foldcolumn=2
-highlight! link FoldColumn Normal
+" set foldcolumn=2
+" highlight! link FoldColumn Normal
 set showtabline=2 " Always show the tabline even if there's only one
 
 set number
@@ -48,11 +31,14 @@ set modeline            " respect # vi: [command] :
 set modelines=2
 autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|TODO\|FIXME\|XXX\|BUG\|HACK\)')
 
-colorscheme PaperColor
+" For some reason, colorscheme needs to be set after all the highlight rules
+" above, esp for light background mode to work right. For conversion between 256
+" colors from/to hex see https://gist.github.com/MicahElliott/719710
+" colorscheme molokai     " has hi Normal ctermbg=234 equiv #1c1c1c
+colorscheme PaperColor  " has hi Normal ctermbg=255 equiv #eeeeee and ctermfg=237 equiv #3a3a3a
 set background=light
-" set background=dark
-" clean up (duplicated and overriden above)
 highlight TODO          ctermbg=230 ctermfg=241
+
 "----------------------------------------------------------------------
 " Navigation
 "----------------------------------------------------------------------
