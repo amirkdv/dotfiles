@@ -87,6 +87,12 @@ set tabstop=2
 " Make it autocmd on InsertLeave so to get rid of flashing dots
 set listchars=tab:›\ ,trail:·,eol:¬
 set list
+" Set colors for listchars
+" NonText is for eol/extends/precedes
+hi NonText ctermfg=253
+" SpecialKey is for tab/nbsp/trail
+hi SpecialKey ctermfg=253
+
 au WinLeave,InsertEnter * :set listchars-=trail:·
 au WinEnter,InsertLeave * :set listchars+=trail:·
 " wrap /\s\+%$// in ma `a, otherwise current line won't be the same
