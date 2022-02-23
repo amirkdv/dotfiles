@@ -12,7 +12,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " My plugins
-Plugin 'rakr/vim-one'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'preservim/nerdtree'
 Plugin 'preservim/nerdcommenter'

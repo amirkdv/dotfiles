@@ -35,14 +35,13 @@ autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|TODO\|FIXME\|XXX\|BUG\|HAC
 " For some reason, colorscheme needs to be set after all the highlight rules
 " above, esp for light background mode to work right. For conversion between 256
 " colors from/to hex see https://gist.github.com/MicahElliott/719710
-" colorscheme PaperColor
-colorscheme one
-set background=light
-hi Normal ctermbg=231
+colorscheme PaperColor
+set background=dark
 highlight TODO          ctermbg=230 ctermfg=241
-highlight CursorLine    ctermbg=15
-highlight StatusLine    ctermbg=15
-highlight ColorColumn   ctermbg=15
+" hi Normal ctermbg=231
+" highlight CursorLine    ctermbg=15
+" highlight StatusLine    ctermbg=15
+" highlight ColorColumn   ctermbg=15
 
 "----------------------------------------------------------------------
 " Navigation
@@ -97,7 +96,7 @@ set listchars=tab:›\ ,trail:·,eol:¬
 set list
 " Set colors for listchars
 " NonText is for eol/extends/precedes
-hi NonText ctermfg=253
+hi NonText ctermfg=240
 " SpecialKey is for tab/nbsp/trail
 hi SpecialKey ctermfg=253
 
