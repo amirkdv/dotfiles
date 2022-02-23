@@ -1,5 +1,0 @@
-'atom-text-editor':
-  'ctrl-shift-m': 'pandoc-preview:show'
-  'ctrl-b': 'build:trigger'
-  'ctrl-shift-b': 'build:stop'
-  'ctrl-q': null
