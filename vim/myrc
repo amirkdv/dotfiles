@@ -36,7 +36,7 @@ autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|TODO\|FIXME\|XXX\|BUG\|HAC
 " above, esp for light background mode to work right. For conversion between 256
 " colors from/to hex see https://gist.github.com/MicahElliott/719710
 colorscheme PaperColor
-set background=dark
+set background=light
 highlight TODO          ctermbg=230 ctermfg=241
 " hi Normal ctermbg=231
 " highlight CursorLine    ctermbg=15
@@ -96,7 +96,7 @@ set listchars=tab:›\ ,trail:·,eol:¬
 set list
 " Set colors for listchars
 " NonText is for eol/extends/precedes
-hi NonText ctermfg=240
+hi NonText ctermfg=251
 " SpecialKey is for tab/nbsp/trail
 hi SpecialKey ctermfg=253
 
