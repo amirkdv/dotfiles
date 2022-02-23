@@ -85,6 +85,7 @@ main(){
       sudo apt-get install rcm
       ;;
     dotfiles)
+      [ -e ~/.vim/bundle/Vundle.vim ] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
       log 'installing dotfiles'
       # the environment variable is needed when running rcup.sh
       CUR_DIR="$CUR_DIR_ABS" $RCUP $RCUP_OPTS

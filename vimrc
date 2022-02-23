@@ -1,170 +1,35 @@
-set backupcopy=yes " so docker mounting of single files doesn't break
+" Mandatory Vundle configuration, cf https://github.com/VundleVim/Vundle.vim#quick-start
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-filetype plugin on
-syntax on
-scriptencoding utf-8
-set encoding=utf-8
-set guifont=Inconsolata\ 13
-let mapleader=";"
-"----------------------------------------------------------------------
-" Colors, Highilights, and General Look
-"----------------------------------------------------------------------
-" Use the following chart for picking 256 colors
-" http://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
-" FIXME the above is defunct, find another one on wikipedia or use this: https://jonasjacek.github.io/colors/
-set t_Co=256            " Enable 256 color
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-set t_md=               " get rid of bold font altogether!
-set cursorline
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
-" set foldcolumn=2
-" highlight! link FoldColumn Normal
-set showtabline=2 " Always show the tabline even if there's only one
+" My plugins
+Plugin 'rakr/vim-one'
+Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'preservim/nerdtree'
+Plugin 'preservim/nerdcommenter'
+Plugin 'tpope/vim-markdown'
 
-set number
-set textwidth=80
-set colorcolumn=81      " needed by highlight ColumnColor
-set laststatus=2        " always show status line
-set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V%)
-set showmatch           " highlight matching braces
-set modeline            " respect # vi: [command] :
-set modelines=2
-autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|TODO\|FIXME\|XXX\|BUG\|HACK\)')
-
-" For some reason, colorscheme needs to be set after all the highlight rules
-" above, esp for light background mode to work right. For conversion between 256
-" colors from/to hex see https://gist.github.com/MicahElliott/719710
-" colorscheme molokai     " has hi Normal ctermbg=234 equiv #1c1c1c
-colorscheme PaperColor  " has hi Normal ctermbg=255 equiv #eeeeee and ctermfg=237 equiv #3a3a3a
-set background=light
-highlight TODO          ctermbg=230 ctermfg=241
-
-"----------------------------------------------------------------------
-" Navigation
-"----------------------------------------------------------------------
-" nicer up/down navigation in wrapped lines
-map j gj
-map k gk
-set scrolloff=10        " keep the cursor 10 lines away from the edges
-" nicer pageup/down
-noremap   <C-j>   10j
-noremap   <C-k>   10k
-" nicer tab navigation
-noremap   <C-s-PageDown> :tabm +1 <cr>
-noremap   <C-s-PageUp> :tabm -1 <cr>
-nnoremap  <tab>   gt
-nnoremap  <s-tab> gT
-" use <leader> instead of Ctrl for splits
-" use the same short cuts "-" and "|" for H/V splitting as tmux
-" see tmux.conf
-" vertical split
-noremap   <leader>\|     <C-w>v
-" horizontal split
-noremap   <leader>-     <C-w>s
-" split navigation
-noremap   <leader>j     <C-w>j
-noremap   <leader>k     <C-w>k
-noremap   <leader>h     <C-w>h
-noremap   <leader>l     <C-w>l
-
-"----------------------------------------------------------------------
-" Search
-"----------------------------------------------------------------------
-set hlsearch
-set incsearch  " show results as I type
-set ignorecase
-set smartcase
-noremap <leader><leader> :nohlsearch<cr>
-"----------------------------------------------------------------------
-" Indentation and Whitespaces
-"----------------------------------------------------------------------
-set autoindent
-set formatoptions=cq
-set smartindent
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
-" Make it autocmd on InsertLeave so to get rid of flashing dots
-set listchars=tab:›\ ,trail:·,eol:¬
-set list
-" Set colors for listchars
-" NonText is for eol/extends/precedes
-hi NonText ctermfg=253
-" SpecialKey is for tab/nbsp/trail
-hi SpecialKey ctermfg=253
-
-au WinLeave,InsertEnter * :set listchars-=trail:·
-au WinEnter,InsertLeave * :set listchars+=trail:·
-" wrap /\s\+%$// in ma `a, otherwise current line won't be the same
-" normal mode commands are executed in commands via :norm
-" NOTE comment out the following in interactive git hunk edit; removing trailing
-" spaces corrupts git patches.
-autocmd BufWritePre * :norm ma
-autocmd BufWritePre * :%s/\s\+$//e
-autocmd BufWritePost * :norm `a
-" Disable vim-markdown folding
-let g:vim_markdown_folding_disabled=1
-set expandtab
-"----------------------------------------------------------------------
-" Text Handling
-"----------------------------------------------------------------------
-" yank/paste to/from clipboard
-" NOTE this needs +clipboard which doesn't come with default vim (install vim-gtk)
-noremap <leader>y "+y
-noremap <leader>p "+p
-
-function RenderMarkdownUrl(url)
-  " Given a url replaces the word under cursor with a reference style markdown
-  " link and adds the link itself to the following line. For example, assuming
-  " the current line is
-  "
-  "   See this thread describing how to ...
-  "              ^
-  "              `---- cursor
-  "
-  " Then
-  "
-  "   :call RenderMarkdownUrl("https://stackoverflow.com/a/3213800/6480912")
-  "
-  " Yields:
-  "   See this [thread][1609129986] describing how to ...
-  "
-  "   [1609129986]: https://stackoverflow.com/a/3213800/6480912
-  "
-  " where the hyperlink id is the current Unix timestamp.
-  let word = expand('<cword>')
-  let id_ = strftime("%s")
-  let mark = "U"
-  " mark current position so we can jump back to it in the end
-  exe "normal! m" . mark
-  exe "normal! diw"
-  " replace word under, e.g. 'thread', with '[thread][1609129986]'
-  let md = "[" . word . "][" . id_ . "]"
-  exe "normal! i" . md . "\<Esc>"
-  " define the link in next line, e.g. '[1609129986]: https...'
-  let li = "[" . id_ . "]: " . a:url
-  exe "normal! o\<cr>" . li . " \<Esc>"
-  " jump back to original position
-  exe "normal! `" . mark
-endfunction
-
-" Wrap function with an easy to use command, e.g.
-" :Ru https://stackoverflow.com/a/3213800/6480912
-command -nargs=1 Ru call RenderMarkdownUrl(<f-args>)
-
-" Paste when clipboard forwarding is not working:
-command Rc r ! cat -
-" Map \d and \p to blackhole register d and p
-noremap <leader>d "_d
-" Write as root if file opened as readonly
-" command F %!sudo tee > /dev/null %
-" Search current git repo for word under cursor
-" :/ is a special path for git grep which means: search from the top level of
-" git repo not just the current subdirectory
-command G   ! git grep <cword> :/
-" Show syntax highlighting groups for word under cursor
-" taken from: http://stackoverflow.com/a/7893500
-command C echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-
-" when commenting out add a space after comment symbol
-let NERDSpaceDelims=1
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+runtime myrc
