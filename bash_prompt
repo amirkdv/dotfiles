@@ -15,12 +15,14 @@ setup_prompt(){
 
   case $OSTYPE in
     darwin*)
-      declare -r fqdn=$(hostname)
+      declare fqdn=$(hostname)
       ;;
     linux-gnu)
-      declare -r fqdn=$(hostname --fqdn)
+      declare fqdn=$(hostname --fqdn)
       ;;
   esac
+  # trim fqdn, add ellipses if necessary
+  fqdn=$(echo ${fqdn} | awk -v len=20 '{ if (length($0) > len) print substr($0, 1, len-3) "..."; else print; }')
   declare -r user=$(whoami)
   declare -r user_color="$( [[ $user == 'root' ]] && echo ${red} || :)"
   declare -r git_branch=" (\$(which git >/dev/null && git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/\1/'))"
@@ -29,7 +31,7 @@ setup_prompt(){
   # escape $ to avoid subshells' immediate evaluation.
   declare -r exit_code="\$(c=\$?; [[ \$c == 0 ]] && echo \"${green}[+]\" || echo \"${red}[-]\")"
 
-  export PS1="${exit_code}${ps_clear}${user_color}\u${ps_clear}@${fqdn:0:20}...:\w${green}${git_branch}${pwd_color} > ${ps_clear}"
+  export PS1="${exit_code}${ps_clear}${user_color}\u${ps_clear}@${fqdn}:\w${green}${git_branch}${pwd_color} > ${ps_clear}"
 }
 
 setup_prompt
