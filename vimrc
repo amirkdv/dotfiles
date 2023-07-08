@@ -17,6 +17,7 @@ Plugin 'preservim/nerdtree'
 Plugin 'preservim/nerdcommenter'
 Plugin 'tpope/vim-markdown'
 Plugin 'hashivim/vim-terraform'
+Plugin 'rodjek/vim-puppet'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

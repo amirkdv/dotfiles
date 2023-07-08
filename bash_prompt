@@ -11,6 +11,7 @@ setup_prompt(){
 
   # number of trailing directory components retained when expanding \w and \W
   # see https://www.gnu.org/software/bash/manual/bashref.html
+  # requries bash 4
   export PROMPT_DIRTRIM=3
 
   case $OSTYPE in
