@@ -1,13 +1,36 @@
-Instructions:
-````bash
-git clone http://github.com/amirkdv/dotfiles.git
-dotfiles/install dotfiles pubkey locale
-````
-The `install` script will install the dotfiles for the user who runs the script.
-If `rcm` is not already installed root privileges are required and `wget` is
-assumed to be installed. To install ``locale`` too, root privileges are
-required.
-To merely install my public key:
+1. Install rcm: https://github.com/thoughtbot/rcm
+
 ```bash
-sh <(wget -qO- https://raw.githubusercontent.com/amirkdv/dotfiles/master/install) pubkey
+# ubuntu
+$ apt install rcm
+
+# macOS
+$ brew install rcm
 ```
+
+2. Clone dotfiles
+```bash
+$ cd ~
+# NOTE: clone destination is important
+$ git clone http://github.com/amirkdv/dotfiles.git .dotfiles
+````
+
+3. List dotfiles
+
+```bash
+$ lsrc
+```
+
+This is effectively the dry-run of `rcup` command below.
+
+
+4. Update dotfiles
+
+```bash
+$ rcup -v
+```
+
+By default this symlinks `~/.foo` to `~/.dotfiles/foo` (note the missing period) and
+interactively prompts to handle conflicts. See `man rcup` for options.
+
+See `make update` for a better experience.

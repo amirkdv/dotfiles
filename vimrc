@@ -1,3 +1,9 @@
+" Step 0. Install Vundle
+"
+"   $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" Source: https://github.com/VundleVim/Vundle.vim
+
+
 " Mandatory Vundle configuration, cf https://github.com/VundleVim/Vundle.vim#quick-start
 set nocompatible              " be iMproved, required
 filetype off                  " required
