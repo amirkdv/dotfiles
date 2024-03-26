@@ -37,10 +37,14 @@ vim_load() {
 }
 
 # start tmux automatically, force 256 colors
-# don't open tmux in intellij
-which tmux >/dev/null && [[ -z $TMUX ]] && [[ -z $JETBRAINS_LICENSE_SERVER ]] && tmux
+# FIXME don't open tmux in intellij - I used to have a check for
+# [[ -z $JETBRAINS_LICENSE_SERVER ]] &&
+# but that env var seems to now be set everywhere
+which tmux >/dev/null && [[ -z $TMUX ]] && tmux
 
-PATH=$PATH:~/go/bin/
+PATH="$PATH:$HOME"
+
+PATH="/opt/homebrew/bin:~/go/bin:$PATH"
 
 # otherwise bundler would need to always be used with sudo to write to /var/lib
 export GEM_HOME=$HOME/.gem
