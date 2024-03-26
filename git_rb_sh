@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -eux
+
+git diff --exit-code || {
+  echo "ERORR: git is not clean, stash first!"
+  exit 1
+}
+
+BASE=master
+CURRENT=$(git symbolic-ref --short HEAD)
+
+git co ${BASE}
+git pull origin ${BASE}
+
+git co ${CURRENT}
+git rebase ${BASE}
