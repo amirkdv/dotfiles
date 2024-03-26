@@ -1,14 +1,16 @@
 #!/bin/bash
 
-set -eux
+set -eu
 
-git diff --exit-code || {
-  echo "ERORR: git is not clean, stash first!"
+git diff --exit-code >/dev/null || {
+  echo "ERORR: git is not clean, commit or stash first!"
   exit 1
 }
 
 BASE=master
 CURRENT=$(git symbolic-ref --short HEAD)
+
+set -x
 
 git co ${BASE}
 git pull origin ${BASE}
