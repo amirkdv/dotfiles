@@ -1,0 +1,27 @@
+setup_prompt(){
+  setopt PROMPT_SUBST
+
+  case $OSTYPE in
+    darwin*)
+      local fqdn=$(hostname)
+      ;;
+    linux-gnu)
+      local fqdn=$(hostname --fqdn)
+      ;;
+  esac
+  # trim fqdn, add ellipses if necessary
+  fqdn=$(echo ${fqdn} | awk -v len=20 '{ if (length($0) > len) print substr($0, 1, len-3) "..."; else print; }')
+
+  local user=$(whoami)
+  local user_color="%f"
+  [[ $user == 'root' ]] && user_color="%F{red}"
+
+  # show [+]/[-] based on previous command's exit code
+  local exit_code='%(?.%F{green}[+].%F{red}[-])%f'
+  # git branch (re-evaluated each prompt thanks to PROMPT_SUBST)
+  local git_branch=' ($(git branch 2>/dev/null | sed -n "s/^\* //p"))'
+
+  export PROMPT="${exit_code}${user_color}${user}%f@${fqdn}:%3~%F{green}${git_branch}%f > "
+}
+
+setup_prompt

@@ -1,0 +1,47 @@
+# If not running interactively, don't do anything
+[[ -o interactive ]] || return
+
+# history
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE APPEND_HISTORY INC_APPEND_HISTORY
+
+# completion
+autoload -Uz compinit && compinit
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+[[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
+[[ -f ~/.zsh_prompt ]] && source ~/.zsh_prompt
+[[ -f ~/.zsh_locale ]] && source ~/.zsh_locale
+
+export EDITOR=vim
+export TZ=America/Toronto
+
+vim_save() {
+    find . -regex '.*swp' | sed 's|\.\([^\/]*\)\.swp|\1|' > open_vim_files.txt
+    find . -regex '.*swp' | xargs rm
+}
+
+vim_load() {
+    vim -p $(cat open_vim_files.txt)
+}
+
+# start tmux automatically, force 256 colors
+# don't open tmux in intellij
+which tmux >/dev/null && [[ -z $TMUX ]] && [[ -z $JETBRAINS_LICENSE_SERVER ]] && [[ $TERM_PROGRAM != "ghostty" ]] && tmux
+
+PATH=$PATH:~/go/bin/
+PATH=$PATH:~/.local/bin
+
+# otherwise bundler would need to always be used with sudo to write to /var/lib
+export GEM_HOME=$HOME/.gem
+
+cd ~/Data/work

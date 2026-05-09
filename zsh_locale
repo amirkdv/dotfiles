@@ -1,0 +1,1 @@
+[[ -f ~/.bash_locale ]] && source ~/.bash_locale
