@@ -46,12 +46,8 @@ export GEM_HOME=$HOME/.gem
 
 cd ~/Data/work
 
-# see github.com/amirkdv/friction-log
-[[ -n $FL_ID ]] && PROMPT="%F{yellow}[REC ${FL_ID#fl-}]%f $PROMPT"
-
-
 # bun completions
-[ -s "/Users/amirkdv/.bun/_bun" ] && source "/Users/amirkdv/.bun/_bun"
+[ -s "/Users/amirkdv/.bun/_bun" ] && source "/Users/amirkdv/.bun/_bun_zsh"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

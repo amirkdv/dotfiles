@@ -48,3 +48,18 @@ PATH="/opt/homebrew/bin:~/go/bin:$PATH"
 export GEM_HOME=$HOME/.gem
 
 cd ~/Data/work
+
+# zsh still has bugs
+# example: run tmux or script under zsh, paste a string, and navigate with option+left
+# Uncommend this to accept using bash and not get the nag.
+# While this line is off, if you don't get the nag, you're on zsh.
+# export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# bun completions
+# generated via
+#  $ bun completions bash
+[ -s "/Users/amirkdv/.bun/_bun_bash" ] && source "/Users/amirkdv/.bun/_bun_bash"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

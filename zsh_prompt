@@ -10,7 +10,7 @@ setup_prompt(){
       ;;
   esac
   # trim fqdn, add ellipses if necessary
-  fqdn=$(echo ${fqdn} | awk -v len=20 '{ if (length($0) > len) print substr($0, 1, len-3) "..."; else print; }')
+  fqdn=$(echo ${fqdn} | awk -v len=8 '{ if (length($0) > len) print substr($0, 1, len-3) "…"; else print; }')
 
   local user=$(whoami)
   local user_color="%f"
@@ -21,7 +21,10 @@ setup_prompt(){
   # git branch (re-evaluated each prompt thanks to PROMPT_SUBST)
   local git_branch=' ($(git branch 2>/dev/null | sed -n "s/^\* //p"))'
 
-  export PROMPT="${exit_code}${user_color}${user}%f@${fqdn}:%3~%F{green}${git_branch}%f > "
+  # generally useful, soft dependency of github.com/amirkdv/friction-log
+  local timestamp="%F{blue}[%D{%Y-%m-%d %H:%M}]%f"
+
+  export PROMPT="${exit_code}${timestamp}${user_color}${user}%f@${fqdn}:%3~%F{green}${git_branch}%f > "
 }
 
 setup_prompt
