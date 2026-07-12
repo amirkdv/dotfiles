@@ -1,5 +1,7 @@
 1. Install rcm: https://github.com/thoughtbot/rcm
 
+Test
+
 ```bash
 # ubuntu
 $ apt install rcm
