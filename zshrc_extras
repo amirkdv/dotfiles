@@ -8,7 +8,7 @@ SAVEHIST=10000
 setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE APPEND_HISTORY INC_APPEND_HISTORY
 
 # completion
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -i
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
