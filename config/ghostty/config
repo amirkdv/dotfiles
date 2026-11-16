@@ -1,0 +1,6 @@
+theme = Alabaster
+
+# without this cursor shows as a line that's hard to find
+cursor-style = block
+# without this, in zsh, shell overrides ghostty's wishes
+shell-integration-features = no-cursor
