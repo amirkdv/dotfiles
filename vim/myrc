@@ -1,4 +1,4 @@
-"vim: set ft=vim
+" vim: set ft=vim:
 
 set backupcopy=yes " so docker mounting of single files doesn't break
 
@@ -23,8 +23,8 @@ set cursorline
 set showtabline=2 " Always show the tabline even if there's only one
 
 set number
-set textwidth=80
-set colorcolumn=81      " needed by highlight ColumnColor
+set textwidth=100
+set colorcolumn=101     " needed by highlight ColumnColor
 set laststatus=2        " always show status line
 set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V%)
 set showmatch           " highlight matching braces
