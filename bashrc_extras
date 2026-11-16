@@ -43,6 +43,7 @@ PATH="$PATH:$HOME"
 PATH=$PATH:~/go/bin/
 PATH=$PATH:~/.local/bin
 PATH="/opt/homebrew/bin:~/go/bin:$PATH"
+PATH="$(npm prefix -g)/bin:$PATH"
 
 # otherwise bundler would need to always be used with sudo to write to /var/lib
 export GEM_HOME=$HOME/.gem
