@@ -1,4 +1,3 @@
-vim.opt.termguicolors = false
 vim.opt.modeline = true
 
 -- Load existing Vim configuration and plugins.

@@ -14,6 +14,9 @@ let mapleader=";"
 " http://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
 " FIXME the above is defunct, find another one on wikipedia or use this: https://jonasjacek.github.io/colors/
 set t_Co=256            " Enable 256 color
+" Use truecolor so colors don't depend on the terminal's 256-color palette
+" (e.g. Rex derives slots 16-255 from its theme, rendering PaperColor's light bg dark).
+if has('termguicolors') | set termguicolors | endif
 
 set t_md=               " get rid of bold font altogether!
 set cursorline
@@ -37,7 +40,7 @@ autocmd Syntax * call matchadd('Todo',  '\W\zs\(NOTE\|TODO\|FIXME\|XXX\|BUG\|HAC
 " colors from/to hex see https://gist.github.com/MicahElliott/719710
 colorscheme PaperColor
 set background=light
-highlight TODO          ctermbg=230 ctermfg=241
+highlight TODO          ctermbg=230 ctermfg=241 guibg=#ffffd7 guifg=#626262
 " hi Normal ctermbg=231
 " highlight CursorLine    ctermbg=15
 " highlight StatusLine    ctermbg=15
@@ -96,9 +99,9 @@ set listchars=tab:›\ ,trail:·,eol:¬
 set list
 " Set colors for listchars
 " NonText is for eol/extends/precedes
-hi NonText ctermfg=251
+hi NonText ctermfg=251 guifg=#c6c6c6
 " SpecialKey is for tab/nbsp/trail
-hi SpecialKey ctermfg=253
+hi SpecialKey ctermfg=253 guifg=#dadada
 
 au WinLeave,InsertEnter * :set listchars-=trail:·
 au WinEnter,InsertLeave * :set listchars+=trail:·
